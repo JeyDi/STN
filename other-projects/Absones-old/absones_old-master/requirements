@@ -1,0 +1,5 @@
+# Requirements for ABSoNeS#
+scipy
+numpy
+networkx
+matplotlib
