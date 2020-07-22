@@ -4,29 +4,29 @@ import logging
 
 class NotActive(FSM):
     '''
-    A not active twitter user(??? tweet).
+    A not active twitter user(tweets published  in two months <= 4).
     '''
     defaults = {
-        'prob_neighbor_spread': 0.2,
-        'prob_search_spread': 0.2,
-        'prob_be_infected': 1,
+        'prob_neighbor_spread': 0.1,
+        'prob_search_spread': 0.1,
+        'prob_be_infected': 0.2,
     }
 
     @default_state
     @state
     def not_exposed(self):
-        if prob(self.env['prob_search_spread']):
+        if prob(self['prob_search_spread']):
             self.set_state(self.exposed)
 
     @state
     def exposed(self):
-        if prob(self.env['prob_be_infected']):
+        if prob(self['prob_be_infected']):
             self.set_state(self.infected)
 
     @state
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id=self.not_exposed.id):
-            if prob(self.env['prob_neighbor_spread']):
+            if prob(self['prob_neighbor_spread']):
                 neighbor.expose()
 
     def expose(self):
@@ -36,12 +36,12 @@ class NotActive(FSM):
 
 class AlmostActive(NotActive):
     '''
-    An almost active twitter user(??? tweet).
+    An almost active twitter user (4 < tweets published  in two months < 16).
     '''
     defaults = {
-        'prob_neighbor_spread': 0.4,
-        'prob_search_spread': 0.4,
-        'prob_be_infected': 1,
+        'prob_neighbor_spread': 0.2,
+        'prob_search_spread': 0.2,
+        'prob_be_infected': 0.3,
     }
 
     level = logging.DEBUG
@@ -49,18 +49,18 @@ class AlmostActive(NotActive):
     @default_state
     @state
     def not_exposed(self):
-        if prob(self.env['prob_search_spread']):
+        if prob(self['prob_search_spread']):
             self.set_state(self.exposed)
 
     @state
     def exposed(self):
-        if prob(self.env['prob_be_infected']):
+        if prob(self['prob_be_infected']):
             self.set_state(self.infected)
 
     @state
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id=self.not_exposed.id):
-            if prob(self.env['prob_neighbor_spread']):
+            if prob(self['prob_neighbor_spread']):
                 neighbor.expose()
 
     def expose(self):
@@ -70,31 +70,31 @@ class AlmostActive(NotActive):
 
 class Active(AlmostActive):
     '''
-    An active twitter user(??? tweet).
+    An active twitter user (tweets published  in two months >= 16).
     '''
 
     defaults = {
-        'prob_neighbor_spread': 0.5,
-        'prob_search_spread': 0.5,
-        'prob_be_infected': 1,
+        'prob_neighbor_spread': 0.4,
+        'prob_search_spread': 0.4,
+        'prob_be_infected': 0.4,
     }
 
 
     @default_state
     @state
     def not_exposed(self):
-        if prob(self.env['prob_search_spread']):
+        if prob(self['prob_search_spread']):
             self.set_state(self.exposed)
 
     @state
     def exposed(self):
-        if prob(self.env['prob_be_infected']):
+        if prob(self['prob_be_infected']):
             self.set_state(self.infected)
 
     @state
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id=self.not_exposed.id):
-            if prob(self.env['prob_neighbor_spread']):
+            if prob(self['prob_neighbor_spread']):
                 neighbor.expose()
 
     def expose(self):

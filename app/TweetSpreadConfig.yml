@@ -1,20 +1,20 @@
 ---
 name: MyExampleSimulation
 load_module: TweetSpread
-max_time: 100
+max_time: 5
 num_trials: 1
-interval: 2
+# interval: 1
 network_params:
     generator: barabasi_albert_graph
     n: 300
     m: 2
 network_agents:
     - agent_type: NotActive
-      weight: 4
+      weight: 3
       state:
         id: not_exposed
     - agent_type: AlmostActive
-      weight: 3
+      weight: 4
       state:
         id: not_exposed
     - agent_type: Active
@@ -22,6 +22,3 @@ network_agents:
       state:
         id: not_exposed
 environment_params:
-    prob_neighbor_spread: 0.5
-    prob_search_spread: 0.5
-    prob_be_infected: 1
