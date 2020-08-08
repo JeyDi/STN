@@ -6,8 +6,8 @@ import pandas as pd
 df = pd.read_csv(r'./conte_followers.csv').iloc[:200]
 
 
-''' Create graph '''
-G = nx.Graph()
+''' Create direct graph '''
+G = nx.DiGraph()
 G.add_node('GiuseppeConteIT')
 
 for u in df['username']:
@@ -24,6 +24,9 @@ for u in df['username']:
     
 #nx.draw(G)
 #plt.savefig('graph.png')
-nx.write_gml(G, './graph_200.gml')
+#nx.write_gml(G, './graph_200.gml')
 G_int = nx.convert_node_labels_to_integers(G)
-nx.write_gexf(G_int, './graph_200_int.gexf')
+nx.write_gexf(G_int, './graph_200_int_direct.gexf')
+
+
+

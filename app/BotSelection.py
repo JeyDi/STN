@@ -4,7 +4,7 @@ from community import community_louvain
 from random import choice
 
 
-G = nx.read_gexf('./graph_200_int.gexf')
+G = nx.read_gexf('./graph_200_int_direct.gexf')
 
 
 
@@ -43,15 +43,18 @@ btw = nx.betweenness_centrality(G)
 
 
 #Communities
-communities = partition_df(G)
+G_undirect = nx.read_gexf('./graph_200_int.gexf')
+communities = partition_df(G_undirect)
 communities.rename(columns={0:'community'}, inplace=True)
 
 
 #Communities && Degree
 degree = []
 for u in communities['user']:
-    degree.append(G.degree[u])    
+    degree.append(G.in_degree[u])    
 communities['degree'] = degree
+
+
 
 
 #User with max degree for each community
