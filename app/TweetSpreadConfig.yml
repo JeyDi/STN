@@ -5,20 +5,17 @@ max_time: 5
 num_trials: 1
 # interval: 1
 network_params:
+    #path: graph_200_int.gexf
     generator: barabasi_albert_graph
     n: 300
     m: 2
 network_agents:
-    - agent_type: NotActive
-      weight: 3
+    - agent_type: OpinionLeader
+      weight: 0.01
+    - agent_type: Bot
+      weight: 0.7
+    - agent_type: User
+      weight: 9
       state:
         id: not_exposed
-    - agent_type: AlmostActive
-      weight: 4
-      state:
-        id: not_exposed
-    - agent_type: Active
-      weight: 3
-      state:
-        id: not_exposed
-environment_params:
+#environment_params:
