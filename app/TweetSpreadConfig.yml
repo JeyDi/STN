@@ -5,17 +5,22 @@ max_time: 5
 num_trials: 1
 # interval: 1
 network_params:
-    #path: graph_200_int.gexf
-    generator: barabasi_albert_graph
-    n: 300
-    m: 2
+    path: graph_200_int_direct.gexf
+
+
+states:
+  0:
+    agent_type: TweetSpread.OpinionLeader 
+
+
 network_agents:
-    - agent_type: OpinionLeader
-      weight: 0.01
     - agent_type: Bot
       weight: 0.7
     - agent_type: User
       weight: 9
       state:
         id: not_exposed
+
+
+
 #environment_params:
