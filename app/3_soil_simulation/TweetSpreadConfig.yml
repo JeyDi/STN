@@ -5,8 +5,7 @@ max_time: 5
 num_trials: 1
 # interval: 1
 network_params:
-    path: graph_200_int_direct.gexf
-
+    path: ../2_graph_builder/graph_200_int_direct.gexf
 
 states:
   0:
@@ -28,7 +27,5 @@ network_agents:
       weight: 9
       state:
         id: not_exposed
-
-
 
 #environment_params:

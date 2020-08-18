@@ -138,8 +138,8 @@ def step_graph(G, df, step):
     #plot(visualize_graph(G))
     return G.copy()
 
-G = nx.read_gexf('./graph_200_int_direct.gexf')
-df = pd.read_csv('./soil_output/MyExampleSimulation/MyExampleSimulation_trial_0.csv')
+G = nx.read_gexf('../2_graph_builder/graph_200_int_direct.gexf')
+df = pd.read_csv('../3_soil_simulation/soil_output/MyExampleSimulation/MyExampleSimulation_trial_0.csv')
 
 #Visualize
 G_node_pos = nx.spring_layout(G)
