@@ -36,12 +36,31 @@ def visualize_graph(G, G_node_pos, step):
         
         node_text.append(node)
         
-        if G.nodes[node]['state'] == 'not_exposed':
+        
+        if G.nodes[node].get('type') != None:
+            if G.nodes[node].get('type') == '1':
+                node_state.append(1)                #OPINION LEADER
+            elif G.nodes[node].get('type') == '2': #BOT
+                node_state.append(2)
+                
+        elif G.nodes[node]['state'] == 'not_exposed': #NOT EXSPOSED
             node_state.append(0)
-        elif G.nodes[node]['state'] == 'exposed':
-            node_state.append(1)
+            
+        elif G.nodes[node]['state'] == 'exposed':  #EXPOSED
+            if G.nodes[node]['infected_type'] == '1':  #EXPOSED BY OP LEAD
+                node_state.append(3)
+            elif G.nodes[node]['infected_type'] == '2': #EXPOSED BY BOT
+                node_state.append(4) 
+            elif G.nodes[node]['infected_type'] == '0': #EXPOSED BY USER
+                node_state.append(5)
+                
         elif G.nodes[node]['state'] == 'infected':
-            node_state.append(2)
+            if G.nodes[node]['infected_type'] == '1':  #INFECTED BY OP LEAD
+                node_state.append(6)
+            elif G.nodes[node]['infected_type'] == '2': #INFECTED BY BOT
+                node_state.append(7) 
+            elif G.nodes[node]['infected_type'] == '0': #INFECTED BY USER
+                node_state.append(8)
 
     
     node_trace = go.Scatter(
@@ -49,16 +68,21 @@ def visualize_graph(G, G_node_pos, step):
         mode='markers',
         hoverinfo='text',
         marker=dict(
-                    showscale=False,
+                    showscale=True,
                     # colorscale options
                     #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
                     #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
                     #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
-                    #colorscale='Rainbow',
+                    colorscale='Rainbow',
                     reversescale=True,
-                    color=['rgb(255, 0, 0)','rgb(0, 239, 0)', 'rgb(0, 9, 253)'],
+                    #color=['rgb(255, 0, 0)','rgb(0, 239, 0)', 'rgb(0, 9, 253)'],
                     size=10,  #noze size
-                    
+                    colorbar=dict(
+                        thickness=15,
+                        title='',
+                        xanchor='left',
+                        titleside='right'
+                    ),
                     line_width=2))
     
     node_trace.text = node_text
@@ -87,32 +111,39 @@ import pandas as pd
 
 
 def step_graph(G, df, step):
-    df = df[df['key'] == 'id' ].reset_index()
+    df_id = df[df['key'] == 'id' ].reset_index()
+    
+    df_infected_type = df[df['key'] == 'infected_type' ].reset_index()
+    
+    df_type = df[df['key'] == 'type' ].set_index('agent_id')
+    nx.set_node_attributes(G, df_type['value'].to_dict(), 'type')
+    
     i=0
     #node_dict = {}
     while i<=step:
-        step_df = df[df['t_step']== i].drop(['index', 'key', 't_step' ], axis=1)
-        step_df['agent_id'] = step_df['agent_id'].astype(int)
-        step_df = step_df.sort_values(by=['agent_id'])
-        step_df['agent_id'] = step_df['agent_id'].astype(str)
-        step_df = step_df.set_index('agent_id')
-        node_dict = step_df.to_dict()
-        #node_dict.update(step_df.to_dict())
         
-        nx.set_node_attributes(G, node_dict['value'], 'state')
+        step_df = df_id[df_id['t_step'] == i]
+        step_df = step_df.set_index('agent_id')
+        nx.set_node_attributes(G, step_df['value'].to_dict(), 'state')
+        
+        step_infected_type = df_infected_type[df_infected_type['t_step'] == i]
+        step_infected_type = step_infected_type.set_index('agent_id')
+        step_infected_type['value']
+        nx.set_node_attributes(G, step_infected_type['value'].to_dict(), 'infected_type')
+       
         
         i = i+1    #INTERVAL IN AGENT PARAMETER
         
         
-    
     #plot(visualize_graph(G))
     return G.copy()
 
-G = nx.read_gexf('./soil/graph_200_int.gexf')
-df = pd.read_csv('./soil/soil_output/MyExampleSimulation/MyExampleSimulation_trial_0.csv')
+G = nx.read_gexf('./graph_200_int_direct.gexf')
+df = pd.read_csv('./soil_output/MyExampleSimulation/MyExampleSimulation_trial_0.csv')
 
 #Visualize
 G_node_pos = nx.spring_layout(G)
+
 step = 0
 G0 = step_graph(G, df, step)
 plot(visualize_graph(G0,G_node_pos, step))

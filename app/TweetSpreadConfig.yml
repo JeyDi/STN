@@ -10,12 +10,20 @@ network_params:
 
 states:
   0:
-    agent_type: TweetSpread.OpinionLeader 
-
+    agent_type: TweetSpread.OpinionLeader
+  1:
+    agent_type: TweetSpread.Bot
+  10:
+    agent_type: TweetSpread.Bot
+  100:
+    agent_type: TweetSpread.Bot
+  520:
+    agent_type: TweetSpread.Bot
+  1200:
+    agent_type: TweetSpread.Bot
 
 network_agents:
-    - agent_type: Bot
-      weight: 0.7
+
     - agent_type: User
       weight: 9
       state:
