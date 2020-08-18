@@ -3,8 +3,8 @@ import pandas as pd
 from community import community_louvain
 from random import choice
 
-
 G = nx.read_gexf('../2_graph_builder/graph_200_int_direct.gexf')
+G_undirect = nx.read_gexf('../2_graph_builder/graph_200_int.gexf')
 
 def partition_df (G):
     partition = community_louvain.best_partition(G, random_state=42)
@@ -17,7 +17,6 @@ def partition_df (G):
     
     partition_df['user'] = user
     return partition_df
-
 
 def max_degree_communitiy(df):
     n_comm = max(df['community'])
@@ -35,28 +34,41 @@ def max_degree_communitiy(df):
         
     return communities_leader
 
-    
 #Betweenness
-btw = nx.betweenness_centrality(G)
-
+def get_betweenness(G):
+    return nx.betweenness_centrality(G)
 
 #Communities
-G_undirect = nx.read_gexf('../2_graph_builder/graph_200_int.gexf')
-communities = partition_df(G_undirect)
-communities.rename(columns={0:'community'}, inplace=True)
+def get_communities(G_undirect):
+    communities = partition_df(G_undirect)
+    communities.rename(columns={0:'community'}, inplace=True)
+    return communities
+
+#Communities degree
+def append_communities_degree(communities):
+    degree = []
+    for u in communities['user']:
+        degree.append(G.in_degree[u])    
+    communities['degree'] = degree
+    return communities
 
 
-#Communities && Degree
-degree = []
-for u in communities['user']:
-    degree.append(G.in_degree[u])    
-communities['degree'] = degree
+if __name__ == '__main__':
+    btw = get_betweenness(G)
+    #print(btw)
 
-#User with max degree for each community
-communities_leader = max_degree_communitiy(communities)
+    communities = get_communities(G_undirect)
+    #print(communities)
 
+    communities = append_communities_degree(communities)
+    #print(communities)
 
-#Random nodes
-random_nodes = []
-for i in range(10):
-    random_nodes.append(choice(list(G.nodes)))
+    #User with max degree for each community
+    communities_leader = max_degree_communitiy(communities)
+    #print(communities_leader)
+
+    #Random nodes
+    random_nodes = []
+    for i in range(10):
+        random_nodes.append(choice(list(G.nodes)))
+    print(random_nodes)
