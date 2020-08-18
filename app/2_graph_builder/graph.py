@@ -22,8 +22,6 @@ for u in df['username']:
     except:
         print(u + ' Not downloaded')
     
+
 G_int = nx.convert_node_labels_to_integers(G)
 nx.write_gexf(G_int, './graph_200_int_direct.gexf')
-
-
-
