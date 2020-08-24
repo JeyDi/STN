@@ -1,0 +1,126 @@
+\documentclass[11pt, english]{article}
+
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[italian]{babel}
+%\selectlanguage{italian}
+\usepackage[utf8]{inputenc}
+\usepackage[svgnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{enumitem}
+
+\usepackage{listings}
+\usepackage{afterpage}
+
+\usepackage{float}
+\restylefloat{table}
+
+\pagestyle{plain}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+%\lstset{language=Python,
+%    basicstyle=\small\ttfamily,
+%   stringstyle=\color{DarkGreen},
+%    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+%    morekeywords={TRUE,FALSE},
+%    deletekeywords={data,frame,length,as,character},
+%    keywordstyle=\color{blue},
+%    commentstyle=\color{DarkGreen},
+%}
+
+\lstset{frame=tb,
+language=R,
+aboveskip=3mm,
+belowskip=3mm,
+showstringspaces=false,
+columns=flexible,
+numbers=none,
+keywordstyle=\color{blue},
+numberstyle=\tiny\color{gray},
+commentstyle=\color{dkgreen},
+stringstyle=\color{mauve},
+breaklines=true,
+breakatwhitespace=true,
+tabsize=3
+}
+
+
+\textheight=21cm
+\textwidth=17cm
+%\topmargin=-1cm
+\oddsidemargin=0cm
+\parindent=0mm
+\pagestyle{plain}
+
+\usepackage{color}
+\usepackage{ragged2e}
+
+\global\let\date\relax
+\newcounter{unomenos}
+\setcounter{unomenos}{\number\year}
+\addtocounter{unomenos}{-1}
+\stepcounter{unomenos}
+\gdef\@date{ Course \arabic{unomenos}/ 2019}
+
+\begin{document}
+
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{-1in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=5cm]{Resources/BicoccaLogo.png}
+%\hspace{\fill} %Space between images
+%\includegraphics[width=3cm]{sea-vision-official-logo.png}
+\end{center}
+\end{figure}
+UNIVERSITÀ DEGLI STUDI MILANO - BICOCCA \\
+\vspace*{0.4in}
+\begin{large}
+Esame Sistemi Complessi: Modelli e simulazione\\
+\end{large}
+\vspace*{0.2in}
+\begin{Large}
+\textbf{Progetto STN} \\
+\vspace*{0.15in}
+Spreading Tweet News \\
+\end{Large}
+\vspace*{0.3in}
+
+\vspace*{0.3in}
+\rule{80mm}{0.1mm}\\
+\vspace*{0.1in}
+\begin{large}
+Andrea Guzzo - 761818
+\end{large}
+%\includegraphics[width=8cm]{yudoo-image.jpg}
+\end{center}
+\end{titlepage}
+
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduzione}
+
+\section{Stato dell'arte}
+
+
+\section{SOIL}
+
+
+\section{Soluzione proposta}
+
+
+
+\end{document}
