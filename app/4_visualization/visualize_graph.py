@@ -134,7 +134,6 @@ def step_graph(G, df, step):
         
         i = i+1    #INTERVAL IN AGENT PARAMETER
         
-        
     #plot(visualize_graph(G))
     return G.copy()
 
@@ -144,6 +143,13 @@ df = pd.read_csv('../3_soil_simulation/soil_output/MyExampleSimulation/MyExample
 #Visualize
 G_node_pos = nx.spring_layout(G)
 
+for i in range(5):
+    print(f"Executing step {i}")
+    G = step_graph(G, df, i)
+    nx.write_gexf(G, f'../5_statistics/G_step{i}.gexf')
+    plot(visualize_graph(G, G_node_pos, i), filename=f'step{i}.html')
+
+"""
 step = 0
 G0 = step_graph(G, df, step)
 nx.write_gexf(G0, '../5_statistics/G_step0.gexf')
@@ -168,3 +174,4 @@ step=4
 G4 = step_graph(G, df, step)
 nx.write_gexf(G4, '../5_statistics/G_step4.gexf')
 plot(visualize_graph(G4, G_node_pos, step))
+"""
