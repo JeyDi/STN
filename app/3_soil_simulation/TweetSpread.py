@@ -7,7 +7,7 @@ class OpinionLeader(FSM):
     .
     '''
     defaults = {
-        'prob_neighbor_spread': 0.5,
+        'prob_neighbor_spread': 0.4,
         'type': 1,
     }
 
@@ -15,8 +15,8 @@ class OpinionLeader(FSM):
     @state
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id="not_exposed"):
-            #if prob(self['prob_neighbor_spread']):
-            neighbor.expose(1)
+            if prob(self['prob_neighbor_spread']):
+                neighbor.expose(1)
 
 
 class Bot(FSM):
@@ -46,7 +46,7 @@ class User(FSM):
     defaults = {
         'prob_neighbor_spread': 0.1,
         'prob_search_spread': 0.1,
-        'prob_be_infected': 0.25,
+        'prob_be_infected': 0.2,
         'infected_type': 0,
     }
 

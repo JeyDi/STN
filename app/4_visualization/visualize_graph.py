@@ -17,52 +17,52 @@ def visualize_graph(G, G_node_pos, step):
         edge_y.append(y0)
         edge_y.append(y1)
         edge_y.append(None)
-    
+
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=0.5, color='#888'),
         hoverinfo='none',
         mode='lines')
-    
+
     node_x = []
     node_y = []
     node_text = []
     node_state = []
-    
+
     for node in G.nodes():
         x, y = G.nodes[node]['pos']
         node_x.append(x)
         node_y.append(y)
-        
+
         node_text.append(node)
-        
-        
+
+
         if G.nodes[node].get('type') != None:
             if G.nodes[node].get('type') == '1':
                 node_state.append(1)                #OPINION LEADER
             elif G.nodes[node].get('type') == '2': #BOT
                 node_state.append(2)
-                
+
         elif G.nodes[node]['state'] == 'not_exposed': #NOT EXSPOSED
             node_state.append(0)
-            
+
         elif G.nodes[node]['state'] == 'exposed':  #EXPOSED
             if G.nodes[node]['infected_type'] == '1':  #EXPOSED BY OP LEAD
                 node_state.append(3)
             elif G.nodes[node]['infected_type'] == '2': #EXPOSED BY BOT
-                node_state.append(4) 
+                node_state.append(4)
             elif G.nodes[node]['infected_type'] == '0': #EXPOSED BY USER
                 node_state.append(5)
-                
+
         elif G.nodes[node]['state'] == 'infected':
             if G.nodes[node]['infected_type'] == '1':  #INFECTED BY OP LEAD
                 node_state.append(6)
             elif G.nodes[node]['infected_type'] == '2': #INFECTED BY BOT
-                node_state.append(7) 
+                node_state.append(7)
             elif G.nodes[node]['infected_type'] == '0': #INFECTED BY USER
                 node_state.append(8)
 
-    
+
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers',
@@ -84,10 +84,10 @@ def visualize_graph(G, G_node_pos, step):
                         titleside='right'
                     ),
                     line_width=2))
-    
+
     node_trace.text = node_text
     node_trace.marker.color = node_state
-    
+
     fig = go.Figure(data=[edge_trace, node_trace],
              layout=go.Layout(
                 title='Conte followers - STEP ' + str(step),
@@ -112,28 +112,28 @@ import pandas as pd
 
 def step_graph(G, df, step):
     df_id = df[df['key'] == 'id' ].reset_index()
-    
+
     df_infected_type = df[df['key'] == 'infected_type' ].reset_index()
-    
+
     df_type = df[df['key'] == 'type' ].set_index('agent_id')
     nx.set_node_attributes(G, df_type['value'].to_dict(), 'type')
-    
+
     i=0
     #node_dict = {}
     while i<=step:
-        
+
         step_df = df_id[df_id['t_step'] == i]
         step_df = step_df.set_index('agent_id')
         nx.set_node_attributes(G, step_df['value'].to_dict(), 'state')
-        
+
         step_infected_type = df_infected_type[df_infected_type['t_step'] == i]
         step_infected_type = step_infected_type.set_index('agent_id')
         step_infected_type['value']
         nx.set_node_attributes(G, step_infected_type['value'].to_dict(), 'infected_type')
-       
-        
+
+
         i = i+1    #INTERVAL IN AGENT PARAMETER
-        
+
     #plot(visualize_graph(G))
     return G.copy()
 
@@ -143,13 +143,13 @@ df = pd.read_csv('../3_soil_simulation/soil_output/MyExampleSimulation/MyExample
 #Visualize
 G_node_pos = nx.spring_layout(G)
 
-for i in range(5):
-    print(f"Executing step {i}")
-    G = step_graph(G, df, i)
-    nx.write_gexf(G, f'../5_statistics/G_step{i}.gexf')
-    plot(visualize_graph(G, G_node_pos, i), filename=f'step{i}.html')
+#for i in range(5):
+#    print(f"Executing step {i}")
+#    G = step_graph(G, df, i)
+#    nx.write_gexf(G, f'../5_statistics/G_step{i}.gexf')
+#    plot(visualize_graph(G, G_node_pos, i), filename=f'step{i}.html')
 
-"""
+
 step = 0
 G0 = step_graph(G, df, step)
 nx.write_gexf(G0, '../5_statistics/G_step0.gexf')
@@ -174,4 +174,3 @@ step=4
 G4 = step_graph(G, df, step)
 nx.write_gexf(G4, '../5_statistics/G_step4.gexf')
 plot(visualize_graph(G4, G_node_pos, step))
-"""
