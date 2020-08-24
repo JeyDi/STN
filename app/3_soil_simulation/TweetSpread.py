@@ -7,7 +7,7 @@ class OpinionLeader(FSM):
     .
     '''
     defaults = {
-        'prob_neighbor_spread': 0.4,
+        'prob_neighbor_spread': 0.7,
         'type': 1,
     }
 
@@ -44,7 +44,7 @@ class User(FSM):
     '''
 
     defaults = {
-        'prob_neighbor_spread': 0.1,
+        'prob_neighbor_spread': 0.05,
         'prob_search_spread': 0.1,
         'prob_be_infected': 0.2,
         'infected_type': 0,
