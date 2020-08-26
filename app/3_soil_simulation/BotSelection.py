@@ -3,8 +3,8 @@ import pandas as pd
 from community import community_louvain
 from random import choice
 
-G = nx.read_gexf('../2_graph_builder/graph_200_int_direct.gexf')
-G_undirect = nx.read_gexf('../2_graph_builder/graph_200_int.gexf')
+G = nx.read_gexf('../2_graph_builder/graph_int_direct.gexf')
+G_undirect = nx.read_gexf('../2_graph_builder/graph_int.gexf')
 
 def partition_df (G):
     partition = community_louvain.best_partition(G, random_state=42)
@@ -25,9 +25,11 @@ def max_degree_communitiy(df):
     i=0
     while i<n_comm:
         community_df = df[df['community']==i]
+        community_length = len(community_df)
         max_degree = max(community_df['degree'])
         user_max_degree = community_df[community_df['degree'] == max_degree]['user'].reset_index(drop=True)
         communities_leader = communities_leader.append({'community' : i, 
+                                                        'communitu_length' : community_length,
                                                         'user' : user_max_degree[0],
                                                         'degree' : max_degree}, ignore_index=True)
         i=i+1

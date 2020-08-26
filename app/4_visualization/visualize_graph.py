@@ -138,7 +138,7 @@ def step_graph(G, df, step):
     return G.copy()
 
 G = nx.read_gexf('../2_graph_builder/graph_200_int_direct.gexf')
-df = pd.read_csv('../3_soil_simulation/soil_output/MyExampleSimulation/MyExampleSimulation_trial_0.csv')
+df = pd.read_csv('../3_soil_simulation/soil_output/random_200/random_200_trial_0.csv')
 
 #Visualize
 G_node_pos = nx.spring_layout(G)
@@ -153,24 +153,24 @@ G_node_pos = nx.spring_layout(G)
 step = 0
 G0 = step_graph(G, df, step)
 nx.write_gexf(G0, '../5_statistics/G_step0.gexf')
-plot(visualize_graph(G0,G_node_pos, step))
+#plot(visualize_graph(G0,G_node_pos, step))
 
 step=1
 G1 = step_graph(G, df, step)
 nx.write_gexf(G1, '../5_statistics/G_step1.gexf')
-plot(visualize_graph(G1,G_node_pos, step))
+#plot(visualize_graph(G1,G_node_pos, step))
 
 step=2
 G2 = step_graph(G, df, step)
 nx.write_gexf(G2, '../5_statistics/G_step2.gexf')
-plot(visualize_graph(G2,G_node_pos, step))
+#plot(visualize_graph(G2,G_node_pos, step))
 
 step=3
 G3 = step_graph(G, df, step)
 nx.write_gexf(G3, '../5_statistics/G_step3.gexf')
-plot(visualize_graph(G3, G_node_pos, step))
+#plot(visualize_graph(G3, G_node_pos, step))
 
 step=4
 G4 = step_graph(G, df, step)
 nx.write_gexf(G4, '../5_statistics/G_step4.gexf')
-plot(visualize_graph(G4, G_node_pos, step))
+#plot(visualize_graph(G4, G_node_pos, step))
