@@ -1,7 +1,0 @@
-pandas
-soil
-streamlit
-networkx
-twython
-plotly
-twint
