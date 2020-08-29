@@ -114,21 +114,22 @@ def step_graph(G, df, step):
     df_id = df[df['key'] == 'id' ].reset_index()
 
     df_infected_type = df[df['key'] == 'infected_type' ].reset_index()
-
+    
     df_type = df[df['key'] == 'type' ].set_index('agent_id')
-    nx.set_node_attributes(G, df_type['value'].to_dict(), 'type')
+    nx.set_node_attributes(G, df_type['value'].to_dict(), 'type') #et bot and opinion leader
 
     i=0
     #node_dict = {}
     while i<=step:
 
         step_df = df_id[df_id['t_step'] == i]
+        step_df['agent_id'] = step_df['agent_id'].astype('str')
         step_df = step_df.set_index('agent_id')
         nx.set_node_attributes(G, step_df['value'].to_dict(), 'state')
 
         step_infected_type = df_infected_type[df_infected_type['t_step'] == i]
+        step_infected_type['agent_id'] = step_infected_type['agent_id'].astype('str')
         step_infected_type = step_infected_type.set_index('agent_id')
-        step_infected_type['value']
         nx.set_node_attributes(G, step_infected_type['value'].to_dict(), 'infected_type')
 
 
@@ -137,40 +138,33 @@ def step_graph(G, df, step):
     #plot(visualize_graph(G))
     return G.copy()
 
-G = nx.read_gexf('../2_graph_builder/graph_200_int_direct.gexf')
-df = pd.read_csv('../3_soil_simulation/soil_output/random_200/random_200_trial_0.csv')
+G = nx.read_gexf('../2_graph_builder/graph_500_int_direct.gexf')
+df = pd.read_csv('../3_soil_simulation/soil_output/random_500/random_500_trial_0.csv')
 
 #Visualize
 G_node_pos = nx.spring_layout(G)
 
-#for i in range(5):
-#    print(f"Executing step {i}")
-#    G = step_graph(G, df, i)
-#    nx.write_gexf(G, f'../5_statistics/G_step{i}.gexf')
-#    plot(visualize_graph(G, G_node_pos, i), filename=f'step{i}.html')
-
-
 step = 0
 G0 = step_graph(G, df, step)
-nx.write_gexf(G0, '../5_statistics/G_step0.gexf')
+nx.write_gexf(G0, '../5_statistics/G_random_step0.gexf')
 #plot(visualize_graph(G0,G_node_pos, step))
 
 step=1
 G1 = step_graph(G, df, step)
-nx.write_gexf(G1, '../5_statistics/G_step1.gexf')
+nx.write_gexf(G1, '../5_statistics/G_random_step1.gexf')
 #plot(visualize_graph(G1,G_node_pos, step))
 
 step=2
 G2 = step_graph(G, df, step)
-nx.write_gexf(G2, '../5_statistics/G_step2.gexf')
+nx.write_gexf(G2, '../5_statistics/G_random_step2.gexf')
 #plot(visualize_graph(G2,G_node_pos, step))
 
 step=3
 G3 = step_graph(G, df, step)
-nx.write_gexf(G3, '../5_statistics/G_step3.gexf')
+nx.write_gexf(G3, '../5_statistics/G_random_step3.gexf')
 #plot(visualize_graph(G3, G_node_pos, step))
 
 step=4
 G4 = step_graph(G, df, step)
-nx.write_gexf(G4, '../5_statistics/G_step4.gexf')
+nx.write_gexf(G4, '../5_statistics/G_random_step4.gexf')
 #plot(visualize_graph(G4, G_node_pos, step))

@@ -2,7 +2,7 @@ import networkx as nx
 import pandas as pd
 
 ''' Import followers dataset '''
-df = pd.read_csv(r'../1_scraper/conte_followers.csv')#.iloc[:200]
+df = pd.read_csv(r'../1_scraper/conte_followers.csv').iloc[:500]
 
 print('Direct graph? y/n')
 val = str(input())
@@ -33,9 +33,9 @@ try:
     G_int = nx.convert_node_labels_to_integers(G)
 
     if val == 'y':
-        nx.write_gexf(G_int, './graph_int_direct.gexf')
+        nx.write_gexf(G_int, './graph_500_int_direct.gexf')
     elif val == 'n':
-        nx.write_gexf(G_int, './graph_int.gexf')
+        nx.write_gexf(G_int, './graph_500_int.gexf')
     
 except:
     print('INPUT ERROR')

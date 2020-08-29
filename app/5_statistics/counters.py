@@ -1,8 +1,8 @@
 def count_not_exposed(G):
     not_exposed = 0
     for node in G.nodes:
-        if G.nodes[node]['state'] == 'not_exposed':
-            not_exposed = not_exposed + 1
+            if G.nodes[node]['state'] == 'not_exposed':
+                not_exposed = not_exposed + 1
     return not_exposed
 
 
@@ -19,7 +19,7 @@ def count_infected_bot(G):
     infected_bot = 0
     for node in G.nodes:
         if G.nodes[node]['state'] == 'infected':
-            if G.nodes[node].get('type') == None and  G.nodes[node]['infected_type'] == '2':
+            if G.nodes[node].get('type') == None and  G.nodes[node].get('infected_type') == '2':
                 infected_bot = infected_bot + 1
     return infected_bot
 
@@ -28,8 +28,10 @@ def count_infected_opinion_leader(G):
     infected_opinion_leader = 0
     for node in G.nodes:
         if G.nodes[node]['state'] == 'infected':
-            if G.nodes[node].get('type') == None and  G.nodes[node]['infected_type'] == '1':
+     
+            if G.nodes[node].get('type') == None and  G.nodes[node].get('infected_type') == '1':
                 infected_opinion_leader = infected_opinion_leader + 1
+
     return infected_opinion_leader
 
 
@@ -37,7 +39,7 @@ def count_infected_user(G):
     infected_user = 0
     for node in G.nodes:
         if G.nodes[node]['state'] == 'infected': 
-            if G.nodes[node].get('type') == None and G.nodes[node]['infected_type'] == '0':
+            if G.nodes[node].get('type') == None and G.nodes[node].get('infected_type')== '0':
                 infected_user = infected_user + 1
     return infected_user
 

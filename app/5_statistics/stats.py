@@ -20,8 +20,8 @@ def print_stats(G):
     print(f'Infected: {infected}')
     print(f'\tFrom Opinion Leader: {infected_opinion_leader}, from BOT: {infected_bot}, from users: {infected_user}')
 
-for i in range(0,5):
-    G = nx.read_gexf(f'./G_step{i}.gexf')
+for i in range(0,5): 
+    G = nx.read_gexf(f'./G_random_step{i}.gexf')
     print('STEP ' + str(i) + ":")
     print_stats(G)
     print()

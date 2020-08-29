@@ -1,34 +1,34 @@
 ---
-name: random_200
+name: random_500
 load_module: TweetSpread
 max_time: 5
 num_trials: 1
 # interval: 1
 network_params:
-    path: ../2_graph_builder/graph_200_int_direct.gexf
+    path: ../2_graph_builder/graph_500_int_direct.gexf
 
 states:
   0:
     agent_type: TweetSpread.OpinionLeader
-  1776:
+  30903:
     agent_type: TweetSpread.Bot
-  6416:
+  24459:
     agent_type: TweetSpread.Bot
-  800:
+  17600:
     agent_type: TweetSpread.Bot
-  3856:
+  28908:
     agent_type: TweetSpread.Bot
-  3311:
+  16631:
     agent_type: TweetSpread.Bot
-  3553:
+  16105:
     agent_type: TweetSpread.Bot
-  107:
+  16854:
     agent_type: TweetSpread.Bot
-  6553:
+  13368:
     agent_type: TweetSpread.Bot
-  5148:
+  23469:
     agent_type: TweetSpread.Bot
-  7011:
+  9659:
     agent_type: TweetSpread.Bot
 
 
