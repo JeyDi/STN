@@ -36,32 +36,33 @@ def visualize_graph(G, G_node_pos, step):
 
         node_text.append(node)
 
-
-        if G.nodes[node].get('type') != None:
-            if G.nodes[node].get('type') == '1':
-                node_state.append(1)                #OPINION LEADER
-            elif G.nodes[node].get('type') == '2': #BOT
-                node_state.append(2)
-
-        elif G.nodes[node]['state'] == 'not_exposed': #NOT EXSPOSED
-            node_state.append(0)
-
-        elif G.nodes[node]['state'] == 'exposed':  #EXPOSED
-            if G.nodes[node]['infected_type'] == '1':  #EXPOSED BY OP LEAD
-                node_state.append(3)
-            elif G.nodes[node]['infected_type'] == '2': #EXPOSED BY BOT
-                node_state.append(4)
-            elif G.nodes[node]['infected_type'] == '0': #EXPOSED BY USER
-                node_state.append(5)
-
-        elif G.nodes[node]['state'] == 'infected':
-            if G.nodes[node]['infected_type'] == '1':  #INFECTED BY OP LEAD
-                node_state.append(6)
-            elif G.nodes[node]['infected_type'] == '2': #INFECTED BY BOT
-                node_state.append(7)
-            elif G.nodes[node]['infected_type'] == '0': #INFECTED BY USER
-                node_state.append(8)
-
+        try:
+            if G.nodes[node].get('type') != None:
+                if G.nodes[node].get('type') == '1':
+                    node_state.append(1)                #OPINION LEADER
+                elif G.nodes[node].get('type') == '2': #BOT
+                    node_state.append(2)
+        
+            elif G.nodes[node]['state'] == 'not_exposed': #NOT EXSPOSED
+                node_state.append(0)
+        
+            elif G.nodes[node]['state'] == 'exposed':  #EXPOSED
+                if G.nodes[node]['infected_type'] == '1':  #EXPOSED BY OP LEAD
+                    node_state.append(3)
+                elif G.nodes[node]['infected_type'] == '2': #EXPOSED BY BOT
+                    node_state.append(4)
+                elif G.nodes[node]['infected_type'] == '0': #EXPOSED BY USER
+                    node_state.append(5)
+        
+            elif G.nodes[node]['state'] == 'infected':
+                if G.nodes[node]['infected_type'] == '1':  #INFECTED BY OP LEAD
+                    node_state.append(6)
+                elif G.nodes[node]['infected_type'] == '2': #INFECTED BY BOT
+                    node_state.append(7)
+                elif G.nodes[node]['infected_type'] == '0': #INFECTED BY USER
+                    node_state.append(8)
+        except:
+            print("Error on node: " + str(G.nodes[node]))
 
     node_trace = go.Scatter(
         x=node_x, y=node_y,
@@ -115,8 +116,10 @@ def step_graph(G, df, step):
 
     df_infected_type = df[df['key'] == 'infected_type' ].reset_index()
     
-    df_type = df[df['key'] == 'type' ].set_index('agent_id')
-    nx.set_node_attributes(G, df_type['value'].to_dict(), 'type') #et bot and opinion leader
+    df_type = df[df['key'] == 'type' ]   # DF with opinion leader and bot
+    df_type['agent_id'] = df_type['agent_id'].astype('str')
+    df_type = df_type.set_index('agent_id')
+    nx.set_node_attributes(G, df_type['value'].to_dict(), 'type') 
 
     i=0
     #node_dict = {}
@@ -139,32 +142,33 @@ def step_graph(G, df, step):
     return G.copy()
 
 G = nx.read_gexf('../2_graph_builder/graph_500_int_direct.gexf')
-df = pd.read_csv('../3_soil_simulation/soil_output/random_500/random_500_trial_0.csv')
+df = pd.read_csv('../3_soil_simulation/soil_output/top_eigenvector_500/top_eigenvector_500_trial_0.csv')
 
 #Visualize
-G_node_pos = nx.spring_layout(G)
+#G_node_pos = nx.spring_layout(G)
+
 
 step = 0
 G0 = step_graph(G, df, step)
-nx.write_gexf(G0, '../5_statistics/G_random_step0.gexf')
+nx.write_gexf(G0, '../5_statistics/G_eigenvector_step0.gexf')
 #plot(visualize_graph(G0,G_node_pos, step))
 
 step=1
 G1 = step_graph(G, df, step)
-nx.write_gexf(G1, '../5_statistics/G_random_step1.gexf')
+nx.write_gexf(G1, '../5_statistics/G_eigenvector_step1.gexf')
 #plot(visualize_graph(G1,G_node_pos, step))
 
 step=2
 G2 = step_graph(G, df, step)
-nx.write_gexf(G2, '../5_statistics/G_random_step2.gexf')
+nx.write_gexf(G2, '../5_statistics/G_eigenvector_step2.gexf')
 #plot(visualize_graph(G2,G_node_pos, step))
 
 step=3
 G3 = step_graph(G, df, step)
-nx.write_gexf(G3, '../5_statistics/G_random_step3.gexf')
+nx.write_gexf(G3, '../5_statistics/G_eigenvector_step3.gexf')
 #plot(visualize_graph(G3, G_node_pos, step))
 
 step=4
 G4 = step_graph(G, df, step)
-nx.write_gexf(G4, '../5_statistics/G_random_step4.gexf')
+nx.write_gexf(G4, '../5_statistics/G_eigenvector_step4.gexf')
 #plot(visualize_graph(G4, G_node_pos, step))
