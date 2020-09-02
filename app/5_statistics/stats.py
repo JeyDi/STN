@@ -20,8 +20,13 @@ def print_stats(G):
     print(f'Infected: {infected}')
     print(f'\tFrom Opinion Leader: {infected_opinion_leader}, from BOT: {infected_bot}, from users: {infected_user}')
 
-for i in range(0,5): 
-    G = nx.read_gexf(f'./G_random_step{i}.gexf')
-    print('STEP ' + str(i) + ":")
-    print_stats(G)
-    print()
+if __name__ == '__main__':
+    for val in ['random', 'btw', 'eigenvector']:
+        print(f'PRINTING {val} GRAPH STATS')
+        
+        for i in range(5): 
+            G = nx.read_gexf(f'../4_visualization/output_graph/{val}/G_{val}_step{i}.gexf')
+            print(f'STEP {i}:')
+            print_stats(G)
+            print()
+        print()
