@@ -4,11 +4,16 @@ import pandas as pd
 ''' Import followers dataset '''
 df = pd.read_csv(r'../1_scraper/conte_followers.csv').iloc[:500]
 
-print('Direct graph? y/n')
-val = str(input())
+print('Random graph? y/n')
+random = str(input())
+
+
 
 ''' Create graph '''
-try:
+
+if random == 'n':
+    print('Direct graph? y/n')
+    val = str(input())
     G = None
 
     if val == 'y':
@@ -36,6 +41,6 @@ try:
         nx.write_gexf(G_int, './graph_500_int_direct.gexf')
     elif val == 'n':
         nx.write_gexf(G_int, './graph_500_int.gexf')
-    
-except:
-    print('INPUT ERROR')
+
+elif random == 'y':
+
