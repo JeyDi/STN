@@ -87,6 +87,7 @@ def side_menu():
     )
     simulation_name = st.sidebar.text_input("Simulation name", value="random_500")
     dir_path = st.sidebar.text_input("Main directory path", value="./simulation")
+    
     max_time = st.sidebar.number_input(
         "Max iteration time", min_value=1, max_value=20, value=5
     )
@@ -96,6 +97,9 @@ def side_menu():
     network_params_path = st.sidebar.text_input(
         "Network parameters file path", value="./data/graph/500-user.gexf"
     )
+    soil_config_path = os.path.abspath(soil_config_path)
+    dir_path = os.path.abspath(dir_path)
+    network_params_path = os.path.abspath(network_params_path)
 
     # launch the simulation
     if st.sidebar.button("Launch the simulation"):
