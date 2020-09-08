@@ -20,6 +20,7 @@ def side_menu():
     ###### SCRAPER CONFIGURATION ######
     ###################################
     # Column selection
+    st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Set parameters for the twitter scraper**")
     username = st.sidebar.text_input("Twitter username", value="@GiuseppeConteIT")
     store_info = st.sidebar.checkbox("Store the informations?", value=True)
@@ -38,6 +39,7 @@ def side_menu():
     ##############################
     ###### GRAPH GENERATION ######
     ##############################
+    st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Generate a new Graph**")
     dataset_path = st.sidebar.text_input(
         "Dataset Path", value="./data/conte_followers.csv"
@@ -54,6 +56,7 @@ def side_menu():
     )
 
     if st.sidebar.button("Launch the Graph generator"):
+
         try:
             # load the dataframe
             st.sidebar.markdown("Start creating the graph...please be patient..")
@@ -77,11 +80,13 @@ def side_menu():
     ##############################
 
     # configure the simulation parameters: user input
+    st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Set parameters for the SOIL Simulation**")
     soil_config_path = st.sidebar.text_input(
         "Soil Configuration Path", value="./simulation/spread_config.yml"
     )
     simulation_name = st.sidebar.text_input("Simulation name", value="random_500")
+    dir_path = st.sidebar.text_input("Main directory path", value="./simulation")
     max_time = st.sidebar.number_input(
         "Max iteration time", min_value=1, max_value=20, value=5
     )
@@ -94,31 +99,40 @@ def side_menu():
 
     # launch the simulation
     if st.sidebar.button("Launch the simulation"):
-        st.sidebar.markdown("Launching the simulation...please wait...")
-        try:
-            # read the existing config in the YAML file
-            print("\nreading the configurations")
-            with open(soil_config_path, "r") as stream:
-                configurations = yaml.safe_load(stream)
+        status = False
+        with st.spinner("Launching the simulation...please wait..."):
+            try:
+                # read the existing config in the YAML file
+                print("\nreading the configurations")
+                with open(soil_config_path, "r") as stream:
+                    configurations = yaml.safe_load(stream)
 
-            # adapt the config with user preferences
-            configurations["name"] = simulation_name
-            configurations["max_time"] = max_time
-            configurations["num_trials"] = num_trials
-            configurations["network_params"] = network_params_path
-            print("New configuration inserted")
+                # adapt the config with user preferences
+                configurations["name"] = simulation_name
+                configurations["max_time"] = max_time
+                configurations["num_trials"] = num_trials
+                configurations["dir_path"] = dir_path
+                configurations["network_params"]["path"] = network_params_path
+                print("New configuration inserted")
 
-            print(f"Configuration: \n {configurations}")  # just for debug
+                print(f"Configuration: \n {configurations}")  # just for debug
 
-            # run the simulation
-            soil.simulation.run_from_config(configurations)
-            st.sidebar.markdown("Simulation complete succesfully!")
+                # run the simulation
+                soil.simulation.run_from_config(configurations)
 
-            return True
+                status = True
+                st.success(f"Simulation completed succesfully")
+                return status
 
-        except Exception as message:
-            print(f"Impossible to run the simulation, please check the code: {message}")
-            return False
+            except Exception as message:
+                print(
+                    f"Impossible to run the simulation, please check the code: {message}"
+                )
+                status = False
+                st.write(configurations)
+                st.error(f"Simulation not completed: {message}")
+                st.exception(message)
+                return status
 
 
 def launch():

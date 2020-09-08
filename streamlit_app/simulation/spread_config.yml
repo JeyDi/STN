@@ -6,7 +6,7 @@ num_trials: 1
 dir_path: ./simulation
 # interval: 1
 network_params:
-  path: ./config/spread_config.yml
+  path: ./data/graph/500-users.gexf
 
 # Configure here the bot and opinion leader in the graph
 states:
