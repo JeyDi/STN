@@ -1,0 +1,42 @@
+#global parameters
+name: random_500
+load_module: entities
+max_time: 5
+num_trials: 1
+dir_path: ./simulation
+# interval: 1
+network_params:
+  path: ./config/spread_config.yml
+
+# Configure here the bot and opinion leader in the graph
+states:
+  0:
+    agent_type: entities.OpinionLeader
+  30903:
+    agent_type: entities.Bot
+  24459:
+    agent_type: entities.Bot
+  17600:
+    agent_type: entities.Bot
+  28908:
+    agent_type: entities.Bot
+  16631:
+    agent_type: entities.Bot
+  16105:
+    agent_type: entities.Bot
+  16854:
+    agent_type: entities.Bot
+  13368:
+    agent_type: entities.Bot
+  23469:
+    agent_type: entities.Bot
+  9659:
+    agent_type: entities.Bot
+
+# define the users
+network_agents:
+  agent_type: User
+  weight: 9
+  state:
+    id: not_exposed
+#environment_params:

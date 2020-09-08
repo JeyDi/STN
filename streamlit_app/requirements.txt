@@ -5,3 +5,6 @@ networkx
 twython
 plotly
 twint
+bandit
+black
+pylint
