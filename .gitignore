@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Mac stuffs
+# Mac stuffs to remove
+*.DS_Store
 .DS_Store
+*DS_Store
+DS_Store
