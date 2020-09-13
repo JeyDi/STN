@@ -1,5 +1,4 @@
 import streamlit as st
-import base64
 import menu as main_menu
 
 if __name__ == "__main__":
