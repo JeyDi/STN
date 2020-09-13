@@ -20,6 +20,7 @@ def print_stats(G, step, graph_name):
     infected_user = cn.count_infected_user(G)
 
     # Print informations for debug purpose on terminal
+    print("---------------------------------------")
     print(f"\nSTEP {step}:")
     print(f"Not exposed: {not_exposed}")
     print(f"Exposed: {exposed}")
@@ -32,6 +33,7 @@ def print_stats(G, step, graph_name):
     )
 
     # Print on GUI
+    st.markdown("---------------")
     st.markdown(f"**STEP: {step} results of: {graph_name}**")
     st.markdown(f"Not exposed: {not_exposed}")
     st.markdown(f"Exposed: {exposed}")
@@ -80,7 +82,11 @@ def generate_plots(graph_name, graph_steps):
             ignore_index=True,
         )
         line_chart = px.line(
-            df_step, x="step", y="value", color="type", title=graph_name
+            df_step,
+            x="step",
+            y="value",
+            color="type",
+            title=f"Infection overall: {graph_name} step: {i}",
         )
 
         # BAR CHART (append informations into dataframe)
@@ -101,25 +107,38 @@ def generate_plots(graph_name, graph_steps):
             ignore_index=True,
         )
         bar_chart = px.bar(
-            df_exposed, x="step", y="value", color="type", title=graph_name
+            df_exposed,
+            x="step",
+            y="value",
+            color="type",
+            title=f"Type of agents exposed: {graph_name} step: {i}",
         )
 
-    # Define final dataframe with all plots and results
-    df_final_exposed = df_final_exposed.append(
-        {"bot": graph_name, "exposed": cn.count_exposed(G)}, ignore_index=True
+        # Define final dataframe with all plots and results
+        df_final_exposed = df_final_exposed.append(
+            {"bot": graph_name, "exposed": cn.count_exposed(G)}, ignore_index=True
+        )
+
+        #### CREATE THE PLOTS
+        ##Uncomment plot(..) to save the plots to disk in html format
+
+        plot_folder = "./data/plots/"
+
+        # Plotly Line Plot
+        # plot(line_chart, filename=f"{plot_folder}steps_{graph_name}.html")
+        st.plotly_chart(line_chart, use_container_width=True)
+
+        # Plotly bar plot
+        # plot(bar_chart, filename=f"{plot_folder}exposed_type_{graph_name}.html")
+        st.plotly_chart(bar_chart, use_container_width=True)
+
+    # Plotly final bar chart
+    final_bar_chart = px.bar(
+        df_final_exposed, x="bot", y="exposed", title=f"Final bot plot of: {graph_name}"
     )
+    # plot(final_bar_chart, filename=f"{plot_folder}final_exposed.html")
+    st.plotly_chart(final_bar_chart, use_container_width=True)
 
-    plot_folder = "./data/plots/"
-    # Create the plots
-    final_line_plot = plot(line_chart, filename=f"{plot_folder}steps_{graph_name}.html")
-    intermediate_bar_plot = plot(
-        bar_chart, filename=f"{plot_folder}exposed_type_{graph_name}.html"
-    )
+    print("\nstatistics calculated succesfully")
 
-    # Othe final bar chart
-    bar_chart = px.bar(df_final_exposed, x="bot", y="exposed")
-    final_bar_plot = plot(bar_chart, filename=f"{plot_folder}final_exposed.html")
-
-    result_plots = [final_line_plot, intermediate_bar_plot, final_bar_plot]
-
-    return result_plots
+    return True

@@ -30,8 +30,12 @@ def menu_scraper():
 
     button_scraper = st.sidebar.button("Launch the twitter scraper", key="b1")
     if button_scraper:
-        c = config(username, store_info, output_file)
-        download(c, output_file, download_level)
+        with st.spinner(
+            "Downloding twitter data...please be patient, it's required long time..."
+        ):
+            c = config(username, store_info, output_file)
+            download(c, output_file, download_level)
+            st.success(f"Download completed created succesfully")
         return True
 
 
@@ -61,20 +65,21 @@ def menu_graph_generator():
 
         try:
             # load the dataframe
-            st.sidebar.markdown("Start creating the graph...please be patient..")
-            df = pd.read_csv(dataset_path).iloc[:follower_number]
-            # create the graph
-            result = create_graph(df, level2_path, graph_name, graph_direct)
-            st.sidebar.markdown(f"Graph {graph_name} created succesfully")
+            with st.spinner("Start creating the graph...please be patient.."):
+
+                df = pd.read_csv(dataset_path).iloc[:follower_number]
+                # create the graph
+                result = create_graph(df, level2_path, graph_name, graph_direct)
+
+                st.success(
+                    f"Graph: **{graph_name}** created succesfully with: **{result}** number of nodes"
+                )
             return True
         except Exception as message:
-            print(
-                "Impossible to read the csv file, please check the path or the code and retry..",
-                message,
+            st.error(
+                f"Impossible to read the csv file, please check the path or the code and retry.. {message}"
             )
-            st.sidebar.markdown(
-                "WARNING: Impossible to read the csv file, check the path"
-            )
+            st.exception("WARNING: Impossible to read the csv file, check the path")
             return False
 
 
@@ -179,7 +184,7 @@ def menu_plot_generations():
 
     G_path = st.sidebar.text_input("Graph path:", "./data/graph/500-users.gexf")
     simulation_data_path = st.sidebar.text_input(
-        "Simulation data path:", "./data/simulations/betweenness_centrality_500.csv"
+        "Simulation data path:", "./data/simulations/soil_result_random.csv"
     )
     simulation_name = st.sidebar.text_input("Simulation name:", "test-simulation")
     G_step = st.sidebar.number_input(
@@ -230,6 +235,8 @@ def count_statistics():
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
             plots = generate_plots(stats_simulation, stats_graph_steps)
-            print(plots)
+
             st.success(f"Graph and Plot succesfully calculated")
-            st.plotly_chart(plots[0])  # try to print the plotly graph
+            # st.plotly_chart(
+            #     plots[0], use_container_width=True
+            # )  # try to print the plotly graph

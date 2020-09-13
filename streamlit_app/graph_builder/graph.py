@@ -17,6 +17,7 @@ def create_graph(df, level2_path, graph_name, direct_graph=True):
         graph_name (string): name of the output file (graph)
         direct_graph (bool, optional): If you want to generate a direct graph. Defaults to True.
     """
+    # TODO: better error catching
     G = None
 
     if direct_graph == True:
@@ -50,4 +51,5 @@ def create_graph(df, level2_path, graph_name, direct_graph=True):
 
     print("--- %s seconds ---" % (time.time() - start_time))
     print("Graph generated to: {graph_filename}")
-    return True
+    node_numbers = G.number_of_nodes()
+    return node_numbers
