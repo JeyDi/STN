@@ -1,10 +1,11 @@
 pandas
 soil
 streamlit
-networkx
+networkx==2.4
 twython
 plotly
 twint
 bandit
 black
 pylint
+tqdm

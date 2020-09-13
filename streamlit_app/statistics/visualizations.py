@@ -46,7 +46,7 @@ def print_stats(G, step, graph_name):
     )
 
 
-def generate_plots(graph_name, graph_steps):
+def generate_statistics_plots(graph_name, graph_steps):
     """
     Generate the final plots and call the statistics print function
     Args:

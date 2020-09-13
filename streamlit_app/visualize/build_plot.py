@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 from plotly.offline import plot
 import pickle
 from visualize.layout import build_graph
+import streamlit as st
 
 
 def step_graph(G, df, step):
@@ -46,7 +47,7 @@ def step_graph(G, df, step):
         return None
 
 
-def generate_plot(
+def generate_graph_plot(
     G_path,
     simulation_data_path,
     simulation_name,
@@ -94,13 +95,18 @@ def generate_plot(
         G_step = step_graph(G, df, i)
 
         nx.write_gexf(G_step, f"./data/output/G_{simulation_name}_step{i}.gexf")
-        single_plot = plot(
-            build_graph(G_step, G_node_pos, i),
-            filename=f"./data/plots/{simulation_name}_step{i}.html",
-        )
-        result_plots.append(single_plot)
+
+        result_graph = build_graph(G_step, G_node_pos, i)
+        # single_plot = plot(result_graph,
+        #     filename=f"./data/plots/{simulation_name}_step{i}.html",
+        # )
+        # result_plots.append(single_plot)
+        st.plotly_chart(result_graph, use_container_width=True)
+
         print(f"{simulation_name} - STEP {i} DONE")
-    return result_plots
+
+    print("\nGraph plot and statistics calculated succesfully")
+    return True
     # except Exception as message:
     #     print(f"Impossible create plots, please check the code: {message}")
     #     return None

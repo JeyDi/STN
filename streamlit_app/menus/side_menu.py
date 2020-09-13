@@ -7,8 +7,8 @@ import os
 from tqdm import tqdm
 import soil
 import yaml
-from visualize.build_plot import generate_plot
-from statistics.visualizations import generate_plots
+from visualize.build_plot import generate_graph_plot
+from statistics.visualizations import generate_statistics_plots
 
 
 def menu_scraper():
@@ -74,12 +74,15 @@ def menu_graph_generator():
                 st.success(
                     f"Graph: **{graph_name}** created succesfully with: **{result}** number of nodes"
                 )
+
+            print("\nSimulation completed")
             return True
         except Exception as message:
             st.error(
                 f"Impossible to read the csv file, please check the path or the code and retry.. {message}"
             )
             st.exception("WARNING: Impossible to read the csv file, check the path")
+            print("\nImpossible to complete the simulation")
             return False
 
 
@@ -196,17 +199,14 @@ def menu_plot_generations():
     if button_plot_generation:
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
-            result_plots = generate_plot(
+            result = generate_graph_plot(
                 G_path,
                 simulation_data_path,
                 simulation_name,
                 G_step,
                 sprint_layout_calc,
             )
-            print(result_plots)
             st.success(f"Graph and Plot succesfully calculated")
-            # TODO: Print Plotly Graph
-            st.plotly_chart(result_plots[0])  # try to print the plotly graph
 
 
 def count_statistics():
@@ -234,7 +234,7 @@ def count_statistics():
     if button_stats:
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
-            plots = generate_plots(stats_simulation, stats_graph_steps)
+            plots = generate_statistics_plots(stats_simulation, stats_graph_steps)
 
             st.success(f"Graph and Plot succesfully calculated")
             # st.plotly_chart(
