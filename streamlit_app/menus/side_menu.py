@@ -8,6 +8,7 @@ from tqdm import tqdm
 import soil
 import yaml
 from visualize.build_plot import generate_plot
+from statistics.visualizations import generate_plots
 
 
 def menu_scraper():
@@ -27,7 +28,8 @@ def menu_scraper():
         "Level of graph distance", min_value=1, max_value=2, value=1
     )
 
-    if st.sidebar.button("Launch the twitter scraper"):
+    button_scraper = st.sidebar.button("Launch the twitter scraper", key="b1")
+    if button_scraper:
         c = config(username, store_info, output_file)
         download(c, output_file, download_level)
         return True
@@ -54,7 +56,8 @@ def menu_graph_generator():
         "Check the box if you want to generate a direct graph", True
     )
 
-    if st.sidebar.button("Launch the Graph generator"):
+    button_graph_generator = st.sidebar.button("Launch the Graph generator", key="b2")
+    if button_graph_generator:
 
         try:
             # load the dataframe
@@ -104,7 +107,8 @@ def menu_soil_simulation():
     network_params_path = os.path.abspath(network_params_path)
 
     # launch the simulation
-    if st.sidebar.button("Launch the simulation"):
+    button_simulation = st.sidebar.button("Launch the simulation", key="b3")
+    if button_simulation:
         status = False
         with st.spinner("Launching the simulation...please wait..."):
             try:
@@ -183,7 +187,8 @@ def menu_plot_generations():
     )
     sprint_layout_calc = st.sidebar.checkbox("Calc the Graph Layout", False)
 
-    if st.sidebar.button("Launch the plot generation"):
+    button_plot_generation = st.sidebar.button("Launch the plot generation", key="b4")
+    if button_plot_generation:
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
             result_plots = generate_plot(
@@ -196,7 +201,35 @@ def menu_plot_generations():
             print(result_plots)
             st.success(f"Graph and Plot succesfully calculated")
             # TODO: Print Plotly Graph
+            st.plotly_chart(result_plots[0])  # try to print the plotly graph
 
 
 def count_statistics():
-    pass
+    """
+    side menu to configure and generate new plots based on data obtained from simulation
+    used into menu.py file
+    """
+    st.sidebar.markdown("--------------")
+    st.sidebar.markdown("**Final Statistics**")
+    stats_simulation = st.sidebar.text_input(
+        "Simulation name:", "test-simulation", key="s1"
+    )
+    stats_graph_steps = st.sidebar.number_input(
+        "Number of steps into the graph:",
+        min_value=1,
+        max_value=10,
+        value=5,
+        step=1,
+        key="s2",
+    )
+
+    ##Generate plots and visualize results
+    # WARNING: this function automatically display information in the main GUI tab
+    button_stats = st.sidebar.button("Calc the final statistics", key="b5")
+    if button_stats:
+        status = False
+        with st.spinner("Start calculating Graph prop and plots...please wait..."):
+            plots = generate_plots(stats_simulation, stats_graph_steps)
+            print(plots)
+            st.success(f"Graph and Plot succesfully calculated")
+            st.plotly_chart(plots[0])  # try to print the plotly graph

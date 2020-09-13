@@ -1,11 +1,12 @@
-import counters as cn
+import statistics.counters as cn
 import networkx as nx
 import pandas as pd
 import plotly.express as px
 from plotly.offline import plot
+import streamlit as st
 
 
-def print_stats(G):
+def print_stats(G, step, graph_name):
     not_exposed = cn.count_not_exposed(G)
 
     exposed = cn.count_exposed(G)
@@ -18,6 +19,8 @@ def print_stats(G):
     infected_bot = cn.count_infected_bot(G)
     infected_user = cn.count_infected_user(G)
 
+    # Print informations for debug purpose on terminal
+    print(f"\nSTEP {step}:")
     print(f"Not exposed: {not_exposed}")
     print(f"Exposed: {exposed}")
     print(
@@ -28,17 +31,95 @@ def print_stats(G):
         f"\tFrom Opinion Leader: {infected_opinion_leader}, from BOT: {infected_bot}, from users: {infected_user}"
     )
 
+    # Print on GUI
+    st.markdown(f"**STEP: {step} results of: {graph_name}**")
+    st.markdown(f"Not exposed: {not_exposed}")
+    st.markdown(f"Exposed: {exposed}")
+    st.markdown(
+        f"\tFrom Opinion Leader: {exposed_opinion_leader}, from BOT: {exposed_bot}, from users: {exposed_user}"
+    )
+    st.markdown(f"Infected: {infected}")
+    st.markdown(
+        f"\tFrom Opinion Leader: {infected_opinion_leader}, from BOT: {infected_bot}, from users: {infected_user}"
+    )
 
-# TODO: integrare e sistemare la parte di calcolo
-def generate_plot(
-    G_path, simulation_data_path, simulation_name, G_step=5, sprint_layout_calc=False
-):
-    pass
 
+def generate_plots(graph_name, graph_steps):
+    """
+    Generate the final plots and call the statistics print function
+    Args:
+        graph_name (str): number of the result graph saved in the previos logical step
+        graph_steps (int): number of steps you want to execute (depend on the steps are inside the graph)
 
-def prepare_data():
-    pass
+    Returns:
+        [list]: List of plotly plots
+    """
+    df_final_exposed = pd.DataFrame(columns=["bot", "exposed"])
+    df_step = pd.DataFrame(columns=["type", "step", "value"])
+    df_exposed = pd.DataFrame(columns=["step", "type", "value"])
 
+    st.markdown("")
 
-def generate_plot():
-    pass
+    for i in range(graph_steps):
+        # read graph and print stats
+        graph_result_path = "./data/output/"
+        G = nx.read_gexf(f"{graph_result_path}G_{graph_name}_step{i}.gexf")
+        print_stats(G, i, graph_name)
+
+        # LINE CHART (append informations into dataframe)
+        df_step = df_step.append(
+            {"type": "not_exposed", "step": i, "value": cn.count_not_exposed(G)},
+            ignore_index=True,
+        )
+        df_step = df_step.append(
+            {"type": "exposed", "step": i, "value": cn.count_exposed(G)},
+            ignore_index=True,
+        )
+        df_step = df_step.append(
+            {"type": "infected", "step": i, "value": cn.count_infected(G)},
+            ignore_index=True,
+        )
+        line_chart = px.line(
+            df_step, x="step", y="value", color="type", title=graph_name
+        )
+
+        # BAR CHART (append informations into dataframe)
+        df_exposed = df_exposed.append(
+            {
+                "step": i,
+                "type": "opinion_leader",
+                "value": cn.count_exposed_opinion_leader(G),
+            },
+            ignore_index=True,
+        )
+        df_exposed = df_exposed.append(
+            {"step": i, "type": "bot", "value": cn.count_exposed_bot(G)},
+            ignore_index=True,
+        )
+        df_exposed = df_exposed.append(
+            {"step": i, "type": "user", "value": cn.count_exposed_user(G)},
+            ignore_index=True,
+        )
+        bar_chart = px.bar(
+            df_exposed, x="step", y="value", color="type", title=graph_name
+        )
+
+    # Define final dataframe with all plots and results
+    df_final_exposed = df_final_exposed.append(
+        {"bot": graph_name, "exposed": cn.count_exposed(G)}, ignore_index=True
+    )
+
+    plot_folder = "./data/plots/"
+    # Create the plots
+    final_line_plot = plot(line_chart, filename=f"{plot_folder}steps_{graph_name}.html")
+    intermediate_bar_plot = plot(
+        bar_chart, filename=f"{plot_folder}exposed_type_{graph_name}.html"
+    )
+
+    # Othe final bar chart
+    bar_chart = px.bar(df_final_exposed, x="bot", y="exposed")
+    final_bar_plot = plot(bar_chart, filename=f"{plot_folder}final_exposed.html")
+
+    result_plots = [final_line_plot, intermediate_bar_plot, final_bar_plot]
+
+    return result_plots
