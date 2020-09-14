@@ -186,10 +186,20 @@ def menu_plot_generations():
     st.sidebar.markdown("**Configure Plots and Results**")
 
     G_path = st.sidebar.text_input("Graph path:", "./data/graph/500-users.gexf")
-    simulation_data_path = st.sidebar.text_input(
-        "Simulation data path:", "./data/simulations/soil_result_random.csv"
+    simulation_data_path_list = [
+        "./data/simulations/soil_result_random.csv",
+        "./data/simulations/soil_result_btw.csv",
+        "./data/simulations/soil_result_eigenvector.csv"
+    ]
+    simulation_data_path = st.sidebar.selectbox(
+        "Simulation data path:", simulation_data_path_list
     )
-    simulation_name = st.sidebar.text_input("Simulation name:", "test-simulation")
+    simulation_name_list = [
+        "random",
+        "btw",
+        "eigenvector"
+    ]
+    simulation_name = st.sidebar.selectbox("Simulation name:", simulation_name_list)
     G_step = st.sidebar.number_input(
         "Number of Graph step:", min_value=1, max_value=10, value=5, step=1
     )
@@ -216,8 +226,13 @@ def count_statistics():
     """
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Final Statistics**")
-    stats_simulation = st.sidebar.text_input(
-        "Simulation name:", "test-simulation", key="s1"
+    simulation_name_list = [
+        "random",
+        "btw",
+        "eigenvector"
+    ]
+    stats_simulation = st.sidebar.selectbox(
+        "Simulation name:", simulation_name_list, key="s1"
     )
     stats_graph_steps = st.sidebar.number_input(
         "Number of steps into the graph:",
