@@ -16,7 +16,7 @@ class OpinionLeader(FSM):
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id="not_exposed"):
             if prob(self['prob_neighbor_spread']):
-                neighbor.expose(1)
+                neighbor.expose(1,1)
 
 
 class Bot(FSM):
@@ -35,7 +35,7 @@ class Bot(FSM):
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id="not_exposed"):
             if prob(self['prob_neighbor_spread']):
-                neighbor.expose(2)
+                neighbor.expose(2,1)
 
 
 class User(FSM):
@@ -48,6 +48,7 @@ class User(FSM):
         'prob_search_spread': 0.1,
         'prob_be_infected': 0.2,
         'infected_type': 0,
+        "directed": 1,
     }
 
 
@@ -66,10 +67,21 @@ class User(FSM):
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id=self.not_exposed.id):
             if prob(self['prob_neighbor_spread']):
-                neighbor.expose(self['infected_type'])
+                neighbor.expose(self['infected_type'], 0)
 
-    def expose(self, type):
-        if not self.state['id'] == self.infected.id: #
+    def expose(self, type, directed):
+        count_neighbor=0
+        prob_neighbor=0
+        for neighbor in self.get_neighboring_agents():
+            if neighbor.state['id']==self.exposed.id:
+                prob_neighbor=prob_neighbor+0.4
+            if neighbor.state['id']==self.infected.id:
+                prob_neighbor=prob_neighbor+0.9
+            count_neighbor=count_neighbor+1
+        prob_neighbor=prob_neighbor/count_neighbor
+        if (not self.state['id'] == self.infected.id and prob(prob_neighbor)): #
             self.set_state(self.exposed)
             self['infected_type'] = type
+            self["directed"] = directed
             #print(self['infected_type'])
+            #print(self['directed'])
