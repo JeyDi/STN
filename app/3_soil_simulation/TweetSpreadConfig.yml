@@ -1,5 +1,5 @@
 ---
-name: random_500
+name: betweenness_500
 load_module: TweetSpread
 max_time: 5
 num_trials: 1
@@ -10,25 +10,25 @@ network_params:
 states:
   0:
     agent_type: TweetSpread.OpinionLeader
-  30903:
+  18788:
     agent_type: TweetSpread.Bot
-  24459:
+  1855:
     agent_type: TweetSpread.Bot
-  17600:
+  12116:
     agent_type: TweetSpread.Bot
-  28908:
+  32115:
     agent_type: TweetSpread.Bot
-  16631:
+  35283:
     agent_type: TweetSpread.Bot
-  16105:
+  10491:
     agent_type: TweetSpread.Bot
-  16854:
+  132:
     agent_type: TweetSpread.Bot
-  13368:
+  17137:
     agent_type: TweetSpread.Bot
-  23469:
+  8527:
     agent_type: TweetSpread.Bot
-  9659:
+  36313:
     agent_type: TweetSpread.Bot
 
 
