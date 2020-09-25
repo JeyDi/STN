@@ -3,11 +3,11 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
 
-def step_graph(G, df, step):
-    df_id = df[df['key'] == 'id' ].reset_index()
-
-    df_infected_type = df[df['key'] == 'infected_type' ].reset_index()
-
+def step_graph(G, df, step):     #CREATE THE STRUCTURE OF THE GRAPH
+    df_id = df[df['key'] == 'id' ].reset_index()    #DF OF STATE INFECTED/EXPOSED/NOT_EXPOSED
+    df_infected_type = df[df['key'] == 'infected_type' ].reset_index()   #DF OF INFECTED TYPE
+    df_directed = df[df['key'] == 'directed' ].reset_index()
+    
     df_type = df[df['key'] == 'type' ]   # DF with opinion leader and bot
     df_type['agent_id'] = df_type['agent_id'].astype('str')
     df_type = df_type.set_index('agent_id')
@@ -18,18 +18,23 @@ def step_graph(G, df, step):
         step_df = df_id[df_id['t_step'] == i]
         step_df['agent_id'] = step_df['agent_id'].astype('str')
         step_df = step_df.set_index('agent_id')
-        nx.set_node_attributes(G, step_df['value'].to_dict(), 'state')
+        nx.set_node_attributes(G, step_df['value'].to_dict(), 'state')     #STATE
 
         step_infected_type = df_infected_type[df_infected_type['t_step'] == i]
         step_infected_type['agent_id'] = step_infected_type['agent_id'].astype('str')
         step_infected_type = step_infected_type.set_index('agent_id')
-        nx.set_node_attributes(G, step_infected_type['value'].to_dict(), 'infected_type')
+        nx.set_node_attributes(G, step_infected_type['value'].to_dict(), 'infected_type')  #INFECTED TYPE
+        
+        step_directed = df_directed[df_directed['t_step'] == i]
+        step_directed['agent_id'] = step_directed['agent_id'].astype('str')
+        step_directed = step_directed.set_index('agent_id')
+        nx.set_node_attributes(G, step_directed['value'].to_dict(), 'directed')  #DIRECTED
 
         i = i + 1    #INTERVAL IN AGENT PARAMETER
 
     return G.copy()
 
-def build_graph(G, G_node_pos, step):
+def build_graph(G, G_node_pos, step):  #FOR VISUALIZATION
     nx.set_node_attributes(G, G_node_pos, 'pos')
 
     edge_x, edge_y = build_edges_list(G)
@@ -159,7 +164,7 @@ if __name__ == '__main__':
     df_top_eigenvector = pd.read_csv('../3_soil_simulation/soil_output/top_eigenvector_500/top_eigenvector_500_trial_0.csv')
 
     # Shared layout
-    G_node_pos = nx.spring_layout(G)
+    #G_node_pos = nx.spring_layout(G)
     
     for val in ['random', 'btw', 'eigenvector']:
         df = None
@@ -176,5 +181,5 @@ if __name__ == '__main__':
             G_step = step_graph(G, df, i)
     
             nx.write_gexf(G_step, f'./output_graph/{val}/G_{val}_step{i}.gexf')
-            plot(build_graph(G_step , G_node_pos, i), filename=f'./output_html/{val}/{val}_step{i}.html')
+            #plot(build_graph(G_step , G_node_pos, i), filename=f'./output_html/{val}/{val}_step{i}.html')
             print(f"{val} - STEP {i} DONE")

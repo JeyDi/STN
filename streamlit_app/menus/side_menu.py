@@ -139,7 +139,7 @@ def menu_soil_simulation_old(): # GUARDA SOTTO
                 ### NON FUNZIONA E NON SO COME MAI!!!!!!
                 #soil.simulation.run_from_config(configurations)
                 #soil.simulation.run_from_config(soil_config_path)
-                #soil.simulation.run_from_config('../simulation/spread_config.yml')
+                soil.simulation.run_from_config('../simulation/spread_config.yml')
                 '''
                 ################################ INIZIO DEBUG
                 for (
