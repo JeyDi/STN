@@ -1,6 +1,6 @@
 import networkx as nx
 import pandas as pd
-from community import community_louvain
+#from community import community_louvain
 from random import choice
 from multiprocessing import Pool
 import itertools

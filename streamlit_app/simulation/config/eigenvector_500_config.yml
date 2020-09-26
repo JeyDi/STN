@@ -1,34 +1,31 @@
 load_module: entities
-max_time: 5
-name: random_500
 network_agents:
-- agent_type: User
+  agent_type: entities.User
   state:
     id: not_exposed
   weight: 9
 network_params:
-  path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/data/graph/500-users.gexf"
-num_trials: 1
+  path: ./data/graph/500-users.gexf
 states:
   0:
     agent_type: entities.OpinionLeader
-  9659:
+  54:
     agent_type: entities.Bot
-  13368:
+  56:
     agent_type: entities.Bot
-  16105:
+  57:
     agent_type: entities.Bot
-  16631:
+  58:
     agent_type: entities.Bot
-  16854:
+  59:
     agent_type: entities.Bot
-  17600:
+  60:
     agent_type: entities.Bot
-  23469:
+  37487:
     agent_type: entities.Bot
-  24459:
+  37488:
     agent_type: entities.Bot
-  28908:
+  37489:
     agent_type: entities.Bot
-  30903:
+  37490:
     agent_type: entities.Bot

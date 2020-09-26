@@ -1,0 +1,31 @@
+load_module: entities
+network_agents:
+  agent_type: entities.User
+  state:
+    id: not_exposed
+  weight: 9
+network_params:
+  path: ./data/graph/2000-users.gexf
+states:
+  0:
+    agent_type: entities.OpinionLeader
+  45255:
+    agent_type: entities.Bot
+  45256:
+    agent_type: entities.Bot
+  45257:
+    agent_type: entities.Bot
+  45258:
+    agent_type: entities.Bot
+  45259:
+    agent_type: entities.Bot
+  45260:
+    agent_type: entities.Bot
+  45262:
+    agent_type: entities.Bot
+  109257:
+    agent_type: entities.Bot
+  195473:
+    agent_type: entities.Bot
+  195475:
+    agent_type: entities.Bot

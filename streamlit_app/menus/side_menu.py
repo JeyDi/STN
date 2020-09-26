@@ -5,9 +5,11 @@ import pandas as pd
 import networkx as nx
 import os
 from tqdm import tqdm
+import random
 import soil
 import yaml
 import subprocess
+from simulation.graph_info import import_graph, get_betweenness, get_eigenvector_centrality
 from visualize.build_plot import generate_graph_plot
 from statistics.visualizations import generate_statistics_plots
 import ntpath
@@ -103,7 +105,86 @@ def menu_graph_generator():
             st.exception("WARNING: Impossible to read the csv file, check the path")
             print("\nImpossible to complete the simulation")
             return False
+import pprint
 
+def menu_bot_selection():
+    """Bot selection
+    Firstly, if required, compute centrality index and select appropiate nodes.
+    Then build a configuration dictionary and dump it into a configuration file
+    ready to be used for the simulation
+    """
+    st.sidebar.markdown("--------------")
+    st.sidebar.markdown("**Set parameters for Bot Selection**")
+    graph_path_list = [
+        "./data/graph/500-users.gexf",
+        "./data/graph/1000-users.gexf",
+        "./data/graph/1500-users.gexf",
+        "./data/graph/2000-users.gexf"
+    ]
+    graph_path = st.sidebar.selectbox("Graph path", graph_path_list)
+    centrality_type = st.sidebar.radio("Type", ["random", "betweenness", "eigenvector"])
+    bot_number = st.sidebar.number_input(
+        "Bot number", min_value=1, max_value=20, value=10
+    )
+    button = st.sidebar.button("Select Bot", key="b3")
+
+    if button:
+        status = False
+        with st.spinner("Selecting Bot...please wait..."):
+            G = import_graph(graph_path)
+
+            result = None
+
+            if centrality_type == "random":
+                result = random.sample(G.nodes(), bot_number)                
+            elif centrality_type == "betweenness":
+                sorted = get_betweenness(G).sort_values(0, ascending=False)
+                result = list(sorted.iloc[:bot_number].index)
+            elif centrality_type == "eigenvector":
+                sorted = get_eigenvector_centrality(G).sort_values(0, ascending=False)
+                result = list(sorted.iloc[:bot_number].index)
+
+            st.success(f"Bot selected: {result}")
+
+            print("Writing configuration file")
+            ###### SISTEMARE #########
+            config = {}
+            config["load_module"] = "entities"
+            config["network_params"] = {
+                "path": graph_path
+            }
+
+            config["network_agents"] = {
+                "agent_type": "entities.User",
+                "weight": 9,
+                "state": {
+                    "id": "not_exposed"
+                }
+            }
+
+            states = {
+                0: {
+                    "agent_type": "entities.OpinionLeader"
+                }
+            }
+
+            for val in result:
+                states[int(val)] = {
+                    "agent_type": "entities.Bot"
+                }
+
+            config["states"] = states
+
+            pp = pprint.PrettyPrinter(indent=4)
+            pp.pprint(config)
+
+            num = len(G.edges("0"))
+            file_path = f"./simulation/config/{centrality_type}_{num}_config.yml"
+            
+            print("Dumping configuration file")
+            with open(file_path, "w") as file:
+                yaml.dump(config, file)
+        return True
 
 def menu_soil_simulation_subroutine():
     """
@@ -114,8 +195,23 @@ def menu_soil_simulation_subroutine():
     # configure the simulation parameters: user input
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Set parameters for the SOIL Simulation**")
-    soil_config_path = st.sidebar.text_input(
-        "Soil Configuration Path", value="./simulation/spread_config.yml"
+    soil_config_path_list = [
+        "./simulation/config/spread_config.yml",
+        "./simulation/config/random_500_config.yml",
+        "./simulation/config/random_1000_config.yml",
+        "./simulation/config/random_1500_config.yml",
+        "./simulation/config/random_2000_config.yml",
+        "./simulation/config/betweenness_500_config.yml",
+        "./simulation/config/betweenness_1000_config.yml",
+        "./simulation/config/betweenness_1500_config.yml",
+        "./simulation/config/betweenness_2000_config.yml",
+        "./simulation/config/eigenvector_500_config.yml",
+        "./simulation/config/eigenvector_1000_config.yml",
+        "./simulation/config/eigenvector_1500_config.yml",
+        "./simulation/config/eigenvector_2000_config.yml"
+    ]
+    soil_config_path = st.sidebar.selectbox(
+        "Soil Configuration Path", soil_config_path_list
     )
     simulation_name = st.sidebar.text_input("Simulation name", value="random_500")
     dir_path = st.sidebar.text_input("Main directory path", value="./simulation")
@@ -126,20 +222,28 @@ def menu_soil_simulation_subroutine():
     num_trials = st.sidebar.number_input(
         "Number of trials", min_value=1, max_value=10, value=1
     )
-    network_params_path = st.sidebar.text_input(
-        "Network parameters file path", value="./data/graph/500-users.gexf"
+    network_params_path_list = [
+        "./data/graph/500-users.gexf",
+        "./data/graph/1000-users.gexf",
+        "./data/graph/1500-users.gexf",
+        "./data/graph/2000-users.gexf"
+    ]
+    network_params_path = st.sidebar.selectbox(
+        "Network parameters file path", network_params_path_list
     )
     soil_config_path = os.path.abspath(soil_config_path)
 
     # config the new path with user gui config yaml
+    # DA SISTEMARE I RIFERIMENTI
     config_path = path_head(soil_config_path)
-    soil_new_config_path = os.path.join(config_path, "soil_config.yml")
+    # soil_new_config_path = os.path.join(config_path, "soil_config.yml")
+    soil_new_config_path = soil_config_path
 
     dir_path = os.path.abspath(dir_path)
     network_params_path = os.path.abspath(network_params_path)
 
     # launch the simulation
-    button_simulation = st.sidebar.button("Launch the simulation", key="b3")
+    button_simulation = st.sidebar.button("Launch the simulation", key="b4")
     if button_simulation:
         status = False
         with st.spinner("Launching the simulation...please wait..."):
@@ -176,7 +280,6 @@ def menu_soil_simulation_subroutine():
                 # Launch the subproces with the command
                 command_launch =  f"soil {soil_new_config_path} --csv"
                 
-
                 subprocess.call(command_launch, shell=True)
 
                 # subprocess.Popen((command_launch)
@@ -367,7 +470,7 @@ def menu_plot_generations():
     )
     sprint_layout_calc = st.sidebar.checkbox("Calc the Graph Layout", False)
 
-    button_plot_generation = st.sidebar.button("Launch the plot generation", key="b4")
+    button_plot_generation = st.sidebar.button("Launch the plot generation", key="b5")
     if button_plot_generation:
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
@@ -403,7 +506,7 @@ def count_statistics():
 
     ##Generate plots and visualize results
     # WARNING: this function automatically display information in the main GUI tab
-    button_stats = st.sidebar.button("Calc the final statistics", key="b5")
+    button_stats = st.sidebar.button("Calc the final statistics", key="b6")
     if button_stats:
         status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):

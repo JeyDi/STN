@@ -2,6 +2,7 @@ import streamlit as st
 from menus.side_menu import (
     menu_scraper,
     menu_graph_generator,
+    menu_bot_selection,
     menu_soil_simulation_subroutine,
     menu_plot_generations,
     count_statistics,
@@ -23,6 +24,9 @@ def side_menu():
 
     menu_graph_generator()
 
+    #### BOT SELECTION ####
+    menu_bot_selection()
+    
     #### SIMULATION WITH SOIL ####
     # TODO: test e debug del codice che non funziona
     menu_soil_simulation_subroutine()

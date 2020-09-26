@@ -1,38 +1,31 @@
----
-name: random_500
 load_module: entities
-max_time: 5
-num_trials: 1
-# interval: 1
+network_agents:
+  agent_type: entities.User
+  state:
+    id: not_exposed
+  weight: 9
 network_params:
-  path: ./graph/500-users.gexf
-
+  path: ./data/graph/1000-users.gexf
 states:
   0:
     agent_type: entities.OpinionLeader
-  30903:
+  13092:
     agent_type: entities.Bot
-  24459:
+  33502:
     agent_type: entities.Bot
-  17600:
+  39858:
     agent_type: entities.Bot
-  28908:
+  48687:
     agent_type: entities.Bot
-  16631:
+  72790:
     agent_type: entities.Bot
-  16105:
+  75670:
     agent_type: entities.Bot
-  16854:
+  77765:
     agent_type: entities.Bot
-  13368:
+  88676:
     agent_type: entities.Bot
-  23469:
+  91500:
     agent_type: entities.Bot
-  9659:
+  105429:
     agent_type: entities.Bot
-
-network_agents:
-  - agent_type: User
-    weight: 9
-    state:
-      id: not_exposed
