@@ -180,9 +180,38 @@ def menu_soil_simulation_subroutine():
 
                 # run the simulation
                 ### NON FUNZIONA E NON SO COME MAI!!!!!!
+<<<<<<< HEAD
                 # soil.simulation.run_from_config(configurations)
                 # soil.simulation.run_from_config(soil_config_path)
                 # soil.simulation.run_from_config('../simulation/spread_config.yml')
+=======
+                #soil.simulation.run_from_config(configurations)
+                #soil.simulation.run_from_config(soil_config_path)
+                soil.simulation.run_from_config('../simulation/spread_config.yml')
+                '''
+                ################################ INIZIO DEBUG
+                for (
+                    config_def
+                ) in configurations:  # CICLA SU STRINGHE (entry del dizionario)
+                    print(f"entry: {config_def}")
+                    # logger.info("Found {} config(s)".format(len(ls)))
+                    for config, path in load_config(
+                        config_def
+                    ):  # COPIATA FUNZIONE SOTTO, SCROLLA
+                        name = config.get("name", "unnamed")
+                        # logger.info("Using config(s): {name}".format(name=name))
+
+                        dir_path = config.pop(
+                            "dir_path", os.path.dirname(path)
+                        )  # CODICE CHE VA IN ERRORE
+                    """
+                    sim = Simulation(dir_path=dir_path,
+                                    **config)
+                    sim.run_simulation(**kwargs)
+                    """
+                '''
+                ################################ FINE DEBUG
+>>>>>>> 6890fb7db53e558bd62360aee7d44e3a7ad26d0d
 
                 status = True
                 print(
