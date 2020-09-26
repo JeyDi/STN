@@ -127,7 +127,7 @@ def menu_soil_simulation_subroutine():
         "Number of trials", min_value=1, max_value=10, value=1
     )
     network_params_path = st.sidebar.text_input(
-        "Network parameters file path", value="./data/graph/500-user.gexf"
+        "Network parameters file path", value="./data/graph/500-users.gexf"
     )
     soil_config_path = os.path.abspath(soil_config_path)
 
@@ -174,11 +174,10 @@ def menu_soil_simulation_subroutine():
                 print(f"Configuration: \n {configurations}")  # just for debug
 
                 # Launch the subproces with the command
-                command_launch = [
-                    f"soil {soil_new_config_path} --csv",
-                ]
+                command_launch =  f"soil {soil_new_config_path} --csv"
+                
 
-                subprocess.call(command_launch)
+                subprocess.call(command_launch, shell=True)
 
                 # subprocess.Popen((command_launch)
 
