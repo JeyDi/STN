@@ -1,0 +1,34 @@
+load_module: entities
+max_time: 5
+name: random_500
+network_agents:
+- agent_type: User
+  state:
+    id: not_exposed
+  weight: 9
+network_params:
+  path: "/Users/jeydi/Dropbox/Progetti/UNIVERSITA\u0300/STN/streamlit_app/data/graph/500-user.gexf"
+num_trials: 1
+states:
+  0:
+    agent_type: entities.OpinionLeader
+  9659:
+    agent_type: entities.Bot
+  13368:
+    agent_type: entities.Bot
+  16105:
+    agent_type: entities.Bot
+  16631:
+    agent_type: entities.Bot
+  16854:
+    agent_type: entities.Bot
+  17600:
+    agent_type: entities.Bot
+  23469:
+    agent_type: entities.Bot
+  24459:
+    agent_type: entities.Bot
+  28908:
+    agent_type: entities.Bot
+  30903:
+    agent_type: entities.Bot

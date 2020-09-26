@@ -2,7 +2,7 @@ import streamlit as st
 from menus.side_menu import (
     menu_scraper,
     menu_graph_generator,
-    menu_soil_simulation,
+    menu_soil_simulation_subroutine,
     menu_plot_generations,
     count_statistics,
 )
@@ -25,7 +25,7 @@ def side_menu():
 
     #### SIMULATION WITH SOIL ####
     # TODO: test e debug del codice che non funziona
-    menu_soil_simulation()
+    menu_soil_simulation_subroutine()
 
     #### PLOT GENERATIONS ####
     # TODO: printare i grafici risultati

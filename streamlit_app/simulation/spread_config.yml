@@ -1,14 +1,12 @@
-#global parameters
+---
 name: random_500
 load_module: entities
 max_time: 5
 num_trials: 1
-dir_path: ./simulation
 # interval: 1
 network_params:
-  path: ./data/graph/500-users.gexf
+  path: ./data/graph/500_users.gexf
 
-# Configure here the bot and opinion leader in the graph
 states:
   0:
     agent_type: entities.OpinionLeader
@@ -33,10 +31,8 @@ states:
   9659:
     agent_type: entities.Bot
 
-# define the users
 network_agents:
-  agent_type: User
-  weight: 9
-  state:
-    id: not_exposed
-#environment_params:
+  - agent_type: User
+    weight: 9
+    state:
+      id: not_exposed
