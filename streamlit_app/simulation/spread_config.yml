@@ -5,7 +5,7 @@ max_time: 5
 num_trials: 1
 # interval: 1
 network_params:
-  path: ./data/graph/500_users.gexf
+  path: ./graph/500-users.gexf
 
 states:
   0:

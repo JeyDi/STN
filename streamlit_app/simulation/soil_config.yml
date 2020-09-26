@@ -7,7 +7,7 @@ network_agents:
     id: not_exposed
   weight: 9
 network_params:
-  path: "/Users/jeydi/Dropbox/Progetti/UNIVERSITA\u0300/STN/streamlit_app/data/graph/500-user.gexf"
+  path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/data/graph/500-users.gexf"
 num_trials: 1
 states:
   0:

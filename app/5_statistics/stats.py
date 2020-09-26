@@ -68,4 +68,5 @@ if __name__ == '__main__':
     bar_chart = px.bar(df_final_exposed, x='bot', y='exposed')
     plot(bar_chart, filename=f'./charts/final_exposed/final_exposed.html')
 
+
         
