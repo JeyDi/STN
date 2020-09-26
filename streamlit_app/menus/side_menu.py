@@ -65,12 +65,14 @@ def menu_graph_generator():
         "Dataset Path", value="./data/conte_followers.csv"
     )
     follower_number = st.sidebar.number_input(
-        "Level of graph distance", min_value=1, max_value=1000, value=500
+        "Level of graph distance", min_value=1, max_value=2000, value=500
     )
     level2_path = st.sidebar.text_input(
         "Level 2 followers path", value="./data/conte_followers"
     )
-    graph_name = st.sidebar.text_input("Graph name", value="500-users")
+    graph_name_list = ["500-users", "1000-users", "1500-users", "2000-users"]
+    graph_name = st.sidebar.selectbox("Graph name", graph_name_list)
+
     graph_direct = st.sidebar.checkbox(
         "Check the box if you want to generate a direct graph", True
     )
@@ -82,9 +84,11 @@ def menu_graph_generator():
             # load the dataframe
             with st.spinner("Start creating the graph...please be patient.."):
 
-                df = pd.read_csv(dataset_path).iloc[:follower_number]
+                df = pd.read_csv(dataset_path)
                 # create the graph
-                result = create_graph(df, level2_path, graph_name, graph_direct)
+                result = create_graph(
+                    df, follower_number, level2_path, graph_name, graph_direct
+                )
 
                 st.success(
                     f"Graph: **{graph_name}** created succesfully with: **{result}** number of nodes"
@@ -183,7 +187,7 @@ def menu_soil_simulation_subroutine():
                 # soil.simulation.run_from_config(configurations)
                 # soil.simulation.run_from_config(soil_config_path)
                 # soil.simulation.run_from_config('../simulation/spread_config.yml')
-                #soil.simulation.run_from_config('../simulation/spread_config.yml')
+                # soil.simulation.run_from_config('../simulation/spread_config.yml')
                 '''
                 ################################ INIZIO DEBUG
                 for (
