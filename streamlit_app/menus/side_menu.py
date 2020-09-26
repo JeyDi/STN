@@ -9,11 +9,11 @@ import random
 import soil
 import yaml
 import subprocess
-from simulation.graph_info import import_graph, get_betweenness, get_eigenvector_centrality
+from simulation.graph_info import import_graph, betweenness_centrality_parallel, get_eigenvector_centrality
 from visualize.build_plot import generate_graph_plot
 from statistics.visualizations import generate_statistics_plots
 import ntpath
-
+import pprint
 
 def path_head(path):
     # obtain foldername from a path, os independent
@@ -105,7 +105,6 @@ def menu_graph_generator():
             st.exception("WARNING: Impossible to read the csv file, check the path")
             print("\nImpossible to complete the simulation")
             return False
-import pprint
 
 def menu_bot_selection():
     """Bot selection
@@ -129,7 +128,6 @@ def menu_bot_selection():
     button = st.sidebar.button("Select Bot", key="b3")
 
     if button:
-        status = False
         with st.spinner("Selecting Bot...please wait..."):
             G = import_graph(graph_path)
 
@@ -138,7 +136,8 @@ def menu_bot_selection():
             if centrality_type == "random":
                 result = random.sample(G.nodes(), bot_number)                
             elif centrality_type == "betweenness":
-                sorted = get_betweenness(G).sort_values(0, ascending=False)
+                ris = betweenness_centrality_parallel(G)
+                sorted = ris.sort_values(0, ascending=False)
                 result = list(sorted.iloc[:bot_number].index)
             elif centrality_type == "eigenvector":
                 sorted = get_eigenvector_centrality(G).sort_values(0, ascending=False)

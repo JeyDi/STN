@@ -13,7 +13,7 @@ def create_graph(df, follower_number, level2_path, graph_name, direct_graph=True
     For now it's working only with 2 level of followers according to the project.
     Args:
         df (object): dataframe with all the followers (level 1) data
-        follower_number (int):
+        follower_number (int): limit level 1 followers 
         level2_path (string): path of the second level (level 2) data for the graph
         graph_name (string): name of the output file (graph)
         direct_graph (bool, optional): If you want to generate a direct graph. Defaults to True.

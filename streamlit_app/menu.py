@@ -14,7 +14,7 @@ def side_menu():
     Streamlit side config menu
     """
 
-    st.sidebar.markdown("**Configuration Pannel**")
+    st.sidebar.markdown("**Configuration Panel**")
 
     #### SCRAPER CONFIGURATION ####
 
