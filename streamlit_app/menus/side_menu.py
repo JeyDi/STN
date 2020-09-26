@@ -70,15 +70,8 @@ def menu_graph_generator():
     level2_path = st.sidebar.text_input(
         "Level 2 followers path", value="./data/conte_followers"
     )
-    graph_name_list = [
-        "500-users",
-        "1000-users",
-        "1500-users",
-        "2000-users"
-    ]
-    graph_name = st.sidebar.selectbox(
-        "Graph name", graph_name_list
-    )
+    graph_name_list = ["500-users", "1000-users", "1500-users", "2000-users"]
+    graph_name = st.sidebar.selectbox("Graph name", graph_name_list)
 
     graph_direct = st.sidebar.checkbox(
         "Check the box if you want to generate a direct graph", True
@@ -93,7 +86,9 @@ def menu_graph_generator():
 
                 df = pd.read_csv(dataset_path)
                 # create the graph
-                result = create_graph(df, follower_number, level2_path, graph_name, graph_direct)
+                result = create_graph(
+                    df, follower_number, level2_path, graph_name, graph_direct
+                )
 
                 st.success(
                     f"Graph: **{graph_name}** created succesfully with: **{result}** number of nodes"
@@ -191,6 +186,30 @@ def menu_soil_simulation_subroutine():
                 # soil.simulation.run_from_config(configurations)
                 # soil.simulation.run_from_config(soil_config_path)
                 # soil.simulation.run_from_config('../simulation/spread_config.yml')
+                # soil.simulation.run_from_config('../simulation/spread_config.yml')
+                '''
+                ################################ INIZIO DEBUG
+                for (
+                    config_def
+                ) in configurations:  # CICLA SU STRINGHE (entry del dizionario)
+                    print(f"entry: {config_def}")
+                    # logger.info("Found {} config(s)".format(len(ls)))
+                    for config, path in load_config(
+                        config_def
+                    ):  # COPIATA FUNZIONE SOTTO, SCROLLA
+                        name = config.get("name", "unnamed")
+                        # logger.info("Using config(s): {name}".format(name=name))
+
+                        dir_path = config.pop(
+                            "dir_path", os.path.dirname(path)
+                        )  # CODICE CHE VA IN ERRORE
+                    """
+                    sim = Simulation(dir_path=dir_path,
+                                    **config)
+                    sim.run_simulation(**kwargs)
+                    """
+                '''
+                ################################ FINE DEBUG
 
                 status = True
                 print(
