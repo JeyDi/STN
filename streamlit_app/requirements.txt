@@ -1,7 +1,7 @@
 pandas
-soil
+soil==0.14.9
 streamlit
-networkx==2.4
+networkx==2.3
 twython
 plotly
 twint

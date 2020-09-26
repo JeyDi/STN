@@ -180,14 +180,10 @@ def menu_soil_simulation_subroutine():
 
                 # run the simulation
                 ### NON FUNZIONA E NON SO COME MAI!!!!!!
-<<<<<<< HEAD
                 # soil.simulation.run_from_config(configurations)
                 # soil.simulation.run_from_config(soil_config_path)
                 # soil.simulation.run_from_config('../simulation/spread_config.yml')
-=======
-                #soil.simulation.run_from_config(configurations)
-                #soil.simulation.run_from_config(soil_config_path)
-                soil.simulation.run_from_config('../simulation/spread_config.yml')
+                #soil.simulation.run_from_config('../simulation/spread_config.yml')
                 '''
                 ################################ INIZIO DEBUG
                 for (
@@ -211,7 +207,6 @@ def menu_soil_simulation_subroutine():
                     """
                 '''
                 ################################ FINE DEBUG
->>>>>>> 6890fb7db53e558bd62360aee7d44e3a7ad26d0d
 
                 status = True
                 print(
