@@ -265,7 +265,6 @@ def menu_soil_simulation_subroutine():
                 configurations["name"] = simulation_name
                 configurations["max_time"] = max_time
                 configurations["num_trials"] = num_trials
-                # configurations["dir_path"] = dir_path
                 configurations["network_params"]["path"] = network_params_path
 
                 # Write a new yaml configuration for the subroutine launch

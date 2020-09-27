@@ -9,23 +9,23 @@ network_params:
 states:
   0:
     agent_type: entities.OpinionLeader
-  60:
+  1898:
     agent_type: entities.Bot
-  7441:
+  12242:
     agent_type: entities.Bot
-  37489:
+  18936:
     agent_type: entities.Bot
-  38048:
+  32267:
     agent_type: entities.Bot
-  38173:
+  43547:
     agent_type: entities.Bot
-  38211:
+  48550:
     agent_type: entities.Bot
-  38324:
+  54000:
     agent_type: entities.Bot
-  45191:
+  72787:
     agent_type: entities.Bot
-  45219:
+  82958:
     agent_type: entities.Bot
-  86930:
+  87396:
     agent_type: entities.Bot

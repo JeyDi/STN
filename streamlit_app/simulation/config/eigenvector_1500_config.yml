@@ -1,6 +1,6 @@
 load_module: entities
 network_agents:
-  agent_type: entities.User
+- agent_type: entities.User
   state:
     id: not_exposed
   weight: 9
