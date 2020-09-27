@@ -154,7 +154,7 @@ def menu_bot_selection():
             }
 
             config["network_agents"] = {
-                "agent_type": "entities.User",
+                "- agent_type": "entities.User",
                 "weight": 9,
                 "state": {
                     "id": "not_exposed"
@@ -195,7 +195,6 @@ def menu_soil_simulation_subroutine():
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Set parameters for the SOIL Simulation**")
     soil_config_path_list = [
-        "./simulation/config/spread_config.yml",
         "./simulation/config/random_500_config.yml",
         "./simulation/config/random_1000_config.yml",
         "./simulation/config/random_1500_config.yml",

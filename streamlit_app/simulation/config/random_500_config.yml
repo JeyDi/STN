@@ -2,12 +2,12 @@ load_module: entities
 max_time: 5
 name: random_500
 network_agents:
-  agent_type: entities.User
+- agent_type: entities.User
   state:
     id: not_exposed
   weight: 9
 network_params:
-  path: C:\Users\Manu2\Documents\GitHub\STN\streamlit_app\data\graph\500-users.gexf
+  path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/data/graph/500-users.gexf"
 num_trials: 1
 states:
   0:
