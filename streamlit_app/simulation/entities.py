@@ -1,6 +1,7 @@
 from soil.agents import FSM, state, default_state, prob
 import logging
 
+level = logging.DEBUG
 
 class OpinionLeader(FSM):
     """
@@ -21,7 +22,7 @@ class OpinionLeader(FSM):
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id="not_exposed"):
             if prob(self["prob_neighbor_spread"]):
-                neighbor.expose(1)
+                neighbor.expose(type=1, directed=1)
 
 
 class Bot(FSM):
@@ -38,14 +39,12 @@ class Bot(FSM):
         "type": 2,
     }
 
-    level = logging.DEBUG
-
     @default_state
     @state
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id="not_exposed"):
             if prob(self["prob_neighbor_spread"]):
-                neighbor.expose(2)
+                neighbor.expose(type=2, directed=1)
 
 
 class User(FSM):
@@ -62,6 +61,7 @@ class User(FSM):
         "prob_search_spread": 0.1,
         "prob_be_infected": 0.2,
         "infected_type": 0,
+        "directed": 1
     }
 
     @default_state
@@ -79,10 +79,31 @@ class User(FSM):
     def infected(self):
         for neighbor in self.get_neighboring_agents(state_id=self.not_exposed.id):
             if prob(self["prob_neighbor_spread"]):
-                neighbor.expose(self["infected_type"])
+                neighbor.expose(type=self["infected_type"], directed=0)
 
-    def expose(self, type):
-        if not self.state["id"] == self.infected.id:  #
+    ### REMOVE AFTER CHECK ###
+    def old_expose(self, type, directed):
+        if not self.state["id"] == self.infected.id:
             self.set_state(self.exposed)
             self["infected_type"] = type
-            # print(self['infected_type'])
+
+    ### NEW WXPOSE ###
+    # da calibrare???
+    def expose(self, type, directed):
+        count_neighbor = 0
+        prob_neighbor = 0
+
+        for neighbor in self.get_neighboring_agents():
+            if neighbor.state['id'] == self.exposed.id:
+                prob_neighbor += 0.4
+            if neighbor.state['id'] == self.infected.id:
+                prob_neighbor += 0.9
+
+            count_neighbor += 1
+
+        prob_neighbor /= count_neighbor
+
+        if (not self.state['id'] == self.infected.id and prob(prob_neighbor)):
+            self.set_state(self.exposed)
+            self['infected_type'] = type
+            self["directed"] = directed

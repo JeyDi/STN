@@ -212,7 +212,21 @@ def menu_soil_simulation_subroutine():
     soil_config_path = st.sidebar.selectbox(
         "Soil Configuration Path", soil_config_path_list
     )
-    simulation_name = st.sidebar.text_input("Simulation name", value="random_500")
+    simulation_name_list = [
+        "random_500",
+        "random_1000",
+        "random_1500",
+        "random_2000",
+        "betweenness_500",
+        "betweenness_1000",
+        "betweenness_1500",
+        "betweenness_2000",
+        "eigenvector_500",
+        "eigenvector_1000",
+        "eigenvector_1500",
+        "eigenvector_2000",
+    ]
+    simulation_name = st.sidebar.selectbox("Simulation name", simulation_name_list)
     dir_path = st.sidebar.text_input("Main directory path", value="./simulation")
 
     max_time = st.sidebar.number_input(
@@ -231,13 +245,6 @@ def menu_soil_simulation_subroutine():
         "Network parameters file path", network_params_path_list
     )
     soil_config_path = os.path.abspath(soil_config_path)
-
-    # config the new path with user gui config yaml
-    # DA SISTEMARE I RIFERIMENTI
-    config_path = path_head(soil_config_path)
-    # soil_new_config_path = os.path.join(config_path, "soil_config.yml")
-    soil_new_config_path = soil_config_path
-
     dir_path = os.path.abspath(dir_path)
     network_params_path = os.path.abspath(network_params_path)
 
@@ -266,24 +273,24 @@ def menu_soil_simulation_subroutine():
 
                 ## LAUNCH THE SIMULATION SUBPROCESS
                 # This is because the soil python libraries doesn't work alone and the only way it's to launch a subprocess with terminal
-                print(f"Writing new configurations to: {soil_new_config_path}")
-                with open(soil_new_config_path, "w") as file:
-                    documents = yaml.dump(configurations, file)
+                print(f"Writing new configurations to: {soil_config_path}")
+                with open(soil_config_path, "w") as file:
+                    yaml.dump(configurations, file)
 
                 print(
-                    f"New configuration inserted and saved to disk: {soil_new_config_path}"
+                    f"New configuration inserted and saved to disk: {soil_config_path}"
                 )
 
                 print(f"Configuration: \n {configurations}")  # just for debug
 
                 # Launch the subproces with the command
-                command_launch =  f"soil {soil_new_config_path} --csv"
+                command_launch =  f"soil {soil_config_path} --csv"
                 
                 subprocess.call(command_launch, shell=True)
 
                 status = True
                 print(
-                    f"Simulation completed succesfully with configs: {soil_new_config_path}"
+                    f"Simulation completed succesfully with configs: {soil_config_path}"
                 )
                 st.success(f"Simulation completed succesfully")
 
