@@ -1,11 +1,14 @@
 load_module: entities
+max_time: 5
+name: random_1000
 network_agents:
 - agent_type: entities.User
   state:
     id: not_exposed
   weight: 9
 network_params:
-  path: ./data/graph/1000-users.gexf
+  path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/data/graph/1000-users.gexf"
+num_trials: 1
 states:
   0:
     agent_type: entities.OpinionLeader
