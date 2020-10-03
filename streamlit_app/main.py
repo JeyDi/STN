@@ -6,6 +6,7 @@ if __name__ == "__main__":
     st.title('STN Project')
     st.markdown('## Simulate news spreading info over a social network')
     st.markdown('Using data gathered from twitter and simulated')
+    st.markdown('<-- Open side menu to run functionalities')
 
     main_menu.launch()
 

@@ -4,7 +4,6 @@ from graph_builder.graph import create_graph
 import pandas as pd
 import networkx as nx
 import os
-from tqdm import tqdm
 import random
 import soil
 import yaml
@@ -265,7 +264,8 @@ def menu_soil_simulation_subroutine():
                 # Write a new yaml configuration for the subroutine launch
 
                 ## LAUNCH THE SIMULATION SUBPROCESS
-                # This is because the soil python libraries doesn't work alone and the only way it's to launch a subprocess with terminal
+                # This is because the soil python libraries doesn't work alone and the only way 
+                # it's to launch a subprocess with terminal
                 print(f"Writing new configurations to: {soil_config_path}")
                 with open(soil_config_path, "w") as file:
                     yaml.dump(configurations, file)
@@ -322,16 +322,6 @@ def menu_plot_generations():
 
     G_path = st.sidebar.selectbox("Graph path:", graph_path_list)
     simulation_name = st.sidebar.selectbox("Simulation name:", simulation_name_list)
-    """
-    simulation_data_path_list = [
-        "./data/simulations/soil_result_random.csv",
-        "./data/simulations/soil_result_btw.csv",
-        "./data/simulations/soil_result_eigenvector.csv",
-    ]
-    simulation_data_path = st.sidebar.selectbox(
-        "Simulation data path:", simulation_data_path_list
-    )
-    """
     simulation_data_path = f"./soil_output/{simulation_name}/{simulation_name}_trial_0.csv"
     G_step = st.sidebar.number_input(
         "Number of Graph step:", min_value=1, max_value=10, value=5, step=1
@@ -373,11 +363,6 @@ def count_statistics():
     # WARNING: this function automatically display information in the main GUI tab
     button_stats = st.sidebar.button("Calc the final statistics", key="b6")
     if button_stats:
-        status = False
-        with st.spinner("Start calculating Graph prop and plots...please wait..."):
-            plots = generate_statistics_plots(stats_simulation, stats_graph_steps)
-
+        with st.spinner("Start calculating stats...please wait..."):
+            generate_statistics_plots(stats_simulation, stats_graph_steps)
             st.success(f"Graph and Plot succesfully calculated")
-            # st.plotly_chart(
-            #     plots[0], use_container_width=True
-            # )  # try to print the plotly graph

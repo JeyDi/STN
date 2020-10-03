@@ -66,11 +66,8 @@ def generate_statistics_plots(graph_name, graph_steps):
     Args:
         graph_name (str): number of the result graph saved in the previos logical step
         graph_steps (int): number of steps you want to execute (depend on the steps are inside the graph)
-
-    Returns:
-        [list]: List of plotly plots
     """
-    df_final_exposed = pd.DataFrame(columns=["bot", "exposed"])
+    df_final_situation = pd.DataFrame(columns=["type", "value"])
     df_step = pd.DataFrame(columns=["type", "step", "value"])
     df_exposed = pd.DataFrame(columns=["step", "type", "value"])
 
@@ -82,78 +79,88 @@ def generate_statistics_plots(graph_name, graph_steps):
         G = nx.read_gexf(f"{graph_result_path}G_{graph_name}_step{i}.gexf")
         print_stats(G, i, graph_name)
 
-    #     # LINE CHART (append informations into dataframe)
-    #     df_step = df_step.append(
-    #         {"type": "not_exposed", "step": i, "value": cn.count_not_exposed(G)},
-    #         ignore_index=True,
-    #     )
-    #     df_step = df_step.append(
-    #         {"type": "exposed", "step": i, "value": cn.count_exposed(G)},
-    #         ignore_index=True,
-    #     )
-    #     df_step = df_step.append(
-    #         {"type": "infected", "step": i, "value": cn.count_infected(G)},
-    #         ignore_index=True,
-    #     )
+        # LINE CHART (append informations into dataframe)
+        df_step = df_step.append(
+            {"type": "not_exposed", "step": i, "value": cn.count_not_exposed(G)},
+            ignore_index=True,
+        )
+        df_step = df_step.append(
+            {"type": "exposed", "step": i, "value": cn.count_exposed(G)},
+            ignore_index=True,
+        )
+        df_step = df_step.append(
+            {"type": "infected", "step": i, "value": cn.count_infected(G)},
+            ignore_index=True,
+        )
 
-    #     line_chart = px.line(
-    #         df_step,
-    #         x="step",
-    #         y="value",
-    #         color="type",
-    #         title=f"Infection overall: {graph_name} step: {i}",
-    #     )
+        line_chart = px.line(
+            df_step,
+            x="step",
+            y="value",
+            color="type",
+            title=f"Infection overall: {graph_name} step: {i}",
+        )
 
-    #     # BAR CHART (append informations into dataframe)
-    #     df_exposed = df_exposed.append(
-    #         {
-    #             "step": i,
-    #             "type": "opinion_leader",
-    #             "value": cn.count_exposed_opinion_leader(G),
-    #         },
-    #         ignore_index=True,
-    #     )
-    #     df_exposed = df_exposed.append(
-    #         {"step": i, "type": "bot", "value": cn.count_exposed_bot(G)},
-    #         ignore_index=True,
-    #     )
-    #     df_exposed = df_exposed.append(
-    #         {"step": i, "type": "user", "value": cn.count_exposed_user(G)},
-    #         ignore_index=True,
-    #     )
-    #     bar_chart = px.bar(
-    #         df_exposed,
-    #         x="step",
-    #         y="value",
-    #         color="type",
-    #         title=f"Type of agents exposed: {graph_name} step: {i}",
-    #     )
+        # BAR CHART (append informations into dataframe)
+        df_exposed = df_exposed.append(
+            {
+                "step": i,
+                "type": "opinion_leader",
+                "value": cn.count_exposed_opinion_leader(G),
+            },
+            ignore_index=True,
+        )
+        df_exposed = df_exposed.append(
+            {"step": i, "type": "bot", "value": cn.count_exposed_bot(G)},
+            ignore_index=True,
+        )
+        df_exposed = df_exposed.append(
+            {"step": i, "type": "user", "value": cn.count_exposed_user(G)},
+            ignore_index=True,
+        )
+        bar_chart = px.bar(
+            df_exposed,
+            x="step",
+            y="value",
+            color="type",
+            title=f"Type of agents exposed: {graph_name} step: {i}",
+        )
 
-    #     # Define final dataframe with all plots and results
-    #     df_final_exposed = df_final_exposed.append(
-    #         {"bot": graph_name, "exposed": cn.count_exposed(G)}, ignore_index=True
-    #     )
+        # PIE CHART (append informations into dataframe)
+        if i == 4:
+            df_final_situation = df_final_situation.append(
+                {"type": "not_exposed", "value": cn.count_not_exposed(G)},
+                ignore_index=True,
+            )
+            df_final_situation = df_final_situation.append(
+                {"type": "exposed", "value": cn.count_exposed(G)},
+                ignore_index=True,
+            )
+            df_final_situation = df_final_situation.append(
+                {"type": "infected", "value": cn.count_infected(G)},
+                ignore_index=True,
+            )
 
-    #     #### CREATE THE PLOTS
-    #     ##Uncomment plot(..) to save the plots to disk in html format
+        #### CREATE THE PLOTS
+        ##Uncomment plot(..) to save the plots to disk in html format
 
-    #     plot_folder = "./data/plots/"
+        plot_folder = "./data/plots/"
 
-    #     # Plotly Line Plot
-    #     # plot(line_chart, filename=f"{plot_folder}steps_{graph_name}.html")
-    #     st.plotly_chart(line_chart, use_container_width=True)
+        # Plotly Line Plot
+        # plot(line_chart, filename=f"{plot_folder}steps_{graph_name}.html")
+        st.plotly_chart(line_chart, use_container_width=True)
 
-    #     # Plotly bar plot
-    #     # plot(bar_chart, filename=f"{plot_folder}exposed_type_{graph_name}.html")
-    #     st.plotly_chart(bar_chart, use_container_width=True)
+        # Plotly bar plot
+        # plot(bar_chart, filename=f"{plot_folder}exposed_type_{graph_name}.html")
+        st.plotly_chart(bar_chart, use_container_width=True)
 
-    # # Plotly final bar chart
-    # final_bar_chart = px.bar(
-    #     df_final_exposed, x="bot", y="exposed", title=f"Final bot plot of: {graph_name}"
-    # )
-    # # plot(final_bar_chart, filename=f"{plot_folder}final_exposed.html")
-    # st.plotly_chart(final_bar_chart, use_container_width=True)
+    # Plotly final pie chart
+    final_pie_chart = px.pie(
+        df_final_situation, values="value", names="type", title=f"Final situation plot of: {graph_name}"
+    )
+    # plot(final_pie_chart, filename=f"{plot_folder}final_situation.html")
+    st.plotly_chart(final_pie_chart, use_container_width=True)
 
-    # print("\nstatistics calculated succesfully")
+    print("\nStatistics calculated succesfully")
 
     return True

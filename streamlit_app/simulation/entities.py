@@ -81,14 +81,6 @@ class User(FSM):
             if prob(self["prob_neighbor_spread"]):
                 neighbor.expose(type=self["infected_type"], directed=0)
 
-    ### REMOVE AFTER CHECK ###
-    def old_expose(self, type, directed):
-        if not self.state["id"] == self.infected.id:
-            self.set_state(self.exposed)
-            self["infected_type"] = type
-
-    ### NEW WXPOSE ###
-    # da calibrare???
     def expose(self, type, directed):
         count_neighbor = 0
         prob_neighbor = 0

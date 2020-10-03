@@ -28,15 +28,13 @@ def side_menu():
     menu_bot_selection()
     
     #### SIMULATION WITH SOIL ####
-    # TODO: test e debug del codice che non funziona
+    # TODO: test diretti e indiretti
     menu_soil_simulation_subroutine()
 
     #### PLOT GENERATIONS ####
-    # TODO: printare i grafici risultati
     menu_plot_generations()
 
     #### COUNT STATISTICS ####
-    # TODO: sistemare la parte di calcolo
     count_statistics()
 
 

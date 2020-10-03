@@ -4,10 +4,6 @@ import pandas as pd
 
 # nest_asyncio.apply()
 
-# print("Download Conte's followers? y/n")
-# val = str(input())
-
-
 def config(username="GiuseppeConteIT", store=True, output="./data/conte_followers.csv"):
     """
     Configure Twint settings for scraping

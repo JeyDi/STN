@@ -12,7 +12,7 @@ def step_graph(G, df, step):
     Prende il grafo e per ogni step della simulazione prende i risultati della simulazione di quello step e aggiunge gli attributi ai nodi
     """
     try:
-        print("Start editing the plot for the step: {step}")
+        print(f"Start editing the plot for the step: {step}")
         df_id = df[df["key"] == "id"].reset_index()
         df_infected_type = df[df["key"] == "infected_type"].reset_index()
         df_directed = df[df['key'] == 'directed' ].reset_index()
