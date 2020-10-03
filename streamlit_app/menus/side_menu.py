@@ -15,6 +15,27 @@ from statistics.visualizations import generate_statistics_plots
 import ntpath
 import pprint
 
+graph_path_list = [
+        "./data/graph/500-users.gexf",
+        "./data/graph/1000-users.gexf",
+        "./data/graph/1500-users.gexf",
+        "./data/graph/2000-users.gexf"
+    ]
+
+simulation_name_list = [
+        "random_500",
+        "random_1000",
+        "random_1500",
+        "random_2000",
+        "betweenness_500",
+        "betweenness_1000",
+        "betweenness_1500",
+        "eigenvector_500",
+        "eigenvector_1000",
+        "eigenvector_1500",
+        "eigenvector_2000",
+    ]
+
 def path_head(path):
     # obtain foldername from a path, os independent
     head, tail = ntpath.split(path)
@@ -114,12 +135,7 @@ def menu_bot_selection():
     """
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Set parameters for Bot Selection**")
-    graph_path_list = [
-        "./data/graph/500-users.gexf",
-        "./data/graph/1000-users.gexf",
-        "./data/graph/1500-users.gexf",
-        "./data/graph/2000-users.gexf"
-    ]
+    
     graph_path = st.sidebar.selectbox("Graph path", graph_path_list)
     centrality_type = st.sidebar.radio("Type", ["random", "betweenness", "eigenvector"])
     bot_number = st.sidebar.number_input(
@@ -146,8 +162,8 @@ def menu_bot_selection():
             st.success(f"Bot selected: {result}")
 
             print("Writing configuration file")
-            ###### SISTEMARE #########
-            config = {}
+            
+            config = dict()
             config["load_module"] = "entities"
             config["network_params"] = {
                 "path": graph_path
@@ -202,7 +218,6 @@ def menu_soil_simulation_subroutine():
         "./simulation/config/betweenness_500_config.yml",
         "./simulation/config/betweenness_1000_config.yml",
         "./simulation/config/betweenness_1500_config.yml",
-        "./simulation/config/betweenness_2000_config.yml",
         "./simulation/config/eigenvector_500_config.yml",
         "./simulation/config/eigenvector_1000_config.yml",
         "./simulation/config/eigenvector_1500_config.yml",
@@ -211,20 +226,6 @@ def menu_soil_simulation_subroutine():
     soil_config_path = st.sidebar.selectbox(
         "Soil Configuration Path", soil_config_path_list
     )
-    simulation_name_list = [
-        "random_500",
-        "random_1000",
-        "random_1500",
-        "random_2000",
-        "betweenness_500",
-        "betweenness_1000",
-        "betweenness_1500",
-        "betweenness_2000",
-        "eigenvector_500",
-        "eigenvector_1000",
-        "eigenvector_1500",
-        "eigenvector_2000",
-    ]
     simulation_name = st.sidebar.selectbox("Simulation name", simulation_name_list)
     dir_path = st.sidebar.text_input("Main directory path", value="./simulation")
 
@@ -234,14 +235,8 @@ def menu_soil_simulation_subroutine():
     num_trials = st.sidebar.number_input(
         "Number of trials", min_value=1, max_value=10, value=1
     )
-    network_params_path_list = [
-        "./data/graph/500-users.gexf",
-        "./data/graph/1000-users.gexf",
-        "./data/graph/1500-users.gexf",
-        "./data/graph/2000-users.gexf"
-    ]
     network_params_path = st.sidebar.selectbox(
-        "Network parameters file path", network_params_path_list
+        "Network parameters file path", graph_path_list
     )
     soil_config_path = os.path.abspath(soil_config_path)
     dir_path = os.path.abspath(dir_path)
@@ -325,7 +320,9 @@ def menu_plot_generations():
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Configure Plots and Results**")
 
-    G_path = st.sidebar.text_input("Graph path:", "./data/graph/500-users.gexf")
+    G_path = st.sidebar.selectbox("Graph path:", graph_path_list)
+    simulation_name = st.sidebar.selectbox("Simulation name:", simulation_name_list)
+    """
     simulation_data_path_list = [
         "./data/simulations/soil_result_random.csv",
         "./data/simulations/soil_result_btw.csv",
@@ -334,8 +331,8 @@ def menu_plot_generations():
     simulation_data_path = st.sidebar.selectbox(
         "Simulation data path:", simulation_data_path_list
     )
-    simulation_name_list = ["random", "btw", "eigenvector"]
-    simulation_name = st.sidebar.selectbox("Simulation name:", simulation_name_list)
+    """
+    simulation_data_path = f"./soil_output/{simulation_name}/{simulation_name}_trial_0.csv"
     G_step = st.sidebar.number_input(
         "Number of Graph step:", min_value=1, max_value=10, value=5, step=1
     )
@@ -343,9 +340,8 @@ def menu_plot_generations():
 
     button_plot_generation = st.sidebar.button("Launch the plot generation", key="b5")
     if button_plot_generation:
-        status = False
         with st.spinner("Start calculating Graph prop and plots...please wait..."):
-            result = generate_graph_plot(
+            generate_graph_plot(
                 G_path,
                 simulation_data_path,
                 simulation_name,
@@ -354,7 +350,6 @@ def menu_plot_generations():
             )
             st.success(f"Graph and Plot succesfully calculated")
 
-
 def count_statistics():
     """
     side menu to configure and generate new plots based on data obtained from simulation
@@ -362,7 +357,6 @@ def count_statistics():
     """
     st.sidebar.markdown("--------------")
     st.sidebar.markdown("**Final Statistics**")
-    simulation_name_list = ["random", "btw", "eigenvector"]
     stats_simulation = st.sidebar.selectbox(
         "Simulation name:", simulation_name_list, key="s1"
     )

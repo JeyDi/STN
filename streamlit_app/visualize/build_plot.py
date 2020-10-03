@@ -14,8 +14,8 @@ def step_graph(G, df, step):
     try:
         print("Start editing the plot for the step: {step}")
         df_id = df[df["key"] == "id"].reset_index()
-
         df_infected_type = df[df["key"] == "infected_type"].reset_index()
+        df_directed = df[df['key'] == 'directed' ].reset_index()
 
         df_type = df[df["key"] == "type"]  # DF with opinion leader and bot
         df_type["agent_id"] = df_type["agent_id"].astype("str")
@@ -38,6 +38,15 @@ def step_graph(G, df, step):
                 G, step_infected_type["value"].to_dict(), "infected_type"
             )
 
+            step_directed = df_directed[df_directed['t_step'] == i]
+            step_directed['agent_id'] = step_directed['agent_id'].astype(
+                "str"
+            )
+            step_directed = step_directed.set_index('agent_id')
+            nx.set_node_attributes(
+                G, step_directed['value'].to_dict(), 'directed'
+            )
+
             i = i + 1  # INTERVAL IN AGENT PARAMETER
         result = G.copy()
         print(f"Graph fixed for the step: {step}")
@@ -54,10 +63,6 @@ def generate_graph_plot(
     G_step_iterations=5,
     sprint_layout_calc=False,
 ):
-    # G_step = step del grafo
-
-    layout_pickle_filename = "./data/serialization/G_node_poss_layout.pkl"
-
     # Import data
     try:
         G = nx.read_gexf(G_path)
@@ -68,27 +73,28 @@ def generate_graph_plot(
         print(f"Impossibile to read data: {message}")
 
     try:
-        # Shared layout
-        if sprint_layout_calc:
-            G_node_pos = nx.spring_layout(G)
-            with open(layout_pickle_filename, "wb") as output:
-                pickle.dump(G_node_pos, output, pickle.HIGHEST_PROTOCOL)
-            load = False
-            print("Spring graph layout calcolated and stored")
-        else:
-            ##load pickle object
-            with open(layout_pickle_filename, "rb") as input:
-                G_node_pos = pickle.load(input)
-            load = True
-            print("Spring graph layout loaded from pickle file")
+        if is_simulation_based_on_500(simulation_name):
+            layout_pickle_filename = "./data/serialization/G_node_poss_layout.pkl"
+
+            # Shared layout
+            if sprint_layout_calc:
+                G_node_pos = nx.spring_layout(G)
+                with open(layout_pickle_filename, "wb") as output:
+                    pickle.dump(G_node_pos, output, pickle.HIGHEST_PROTOCOL)
+                load = False
+                print("Spring graph layout calcolated and stored")
+            else:
+                ##load pickle object
+                with open(layout_pickle_filename, "rb") as input:
+                    G_node_pos = pickle.load(input)
+                load = True
+                print("Spring graph layout loaded from pickle file")
     except Exception as message:
         if load:
             print(f"Impossibile to load the pickle file: {message}")
         elif not load:
             print(f"Impossible to calc and save the pickle file: {message}")
 
-    result_plots = []
-    # try:
     for i in range(G_step_iterations):
         print(f"Start generating the plot: {G_step_iterations}")
         G_step = None
@@ -96,17 +102,14 @@ def generate_graph_plot(
 
         nx.write_gexf(G_step, f"./data/output/G_{simulation_name}_step{i}.gexf")
 
-        result_graph = build_graph(G_step, G_node_pos, i)
-        # single_plot = plot(result_graph,
-        #     filename=f"./data/plots/{simulation_name}_step{i}.html",
-        # )
-        # result_plots.append(single_plot)
-        st.plotly_chart(result_graph, use_container_width=True)
+        if is_simulation_based_on_500(simulation_name):
+            result_graph = build_graph(G_step, G_node_pos, i)
+            st.plotly_chart(result_graph, use_container_width=True)
 
         print(f"{simulation_name} - STEP {i} DONE")
 
     print("\nGraph plot and statistics calculated succesfully")
     return True
-    # except Exception as message:
-    #     print(f"Impossible create plots, please check the code: {message}")
-    #     return None
+
+def is_simulation_based_on_500(simulation_name):
+    return simulation_name.split("_")[1] == "500"

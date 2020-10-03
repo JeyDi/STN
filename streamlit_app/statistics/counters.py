@@ -44,7 +44,16 @@ def count_infected_user(G):
     return infected_user
 
 
-
+def count_infected_directed(G):
+    directed = 0
+    undirected = 0
+    for node in G.nodes:
+        if G.nodes[node]['state'] == 'infected':
+            if G.nodes[node].get('type') == None and G.nodes[node].get('directed') == '1':
+                directed = directed + 1
+            elif G.nodes[node].get('type') == None and G.nodes[node].get('directed') == '0':
+                undirected = undirected + 1
+    return directed, undirected
 
 
 ''' EXPOSED '''
@@ -83,8 +92,13 @@ def count_exposed_user(G):
     return exposed_user
 
 
-
-
-
-
-
+def count_exposed_directed(G):
+    directed = 0
+    undirected = 0
+    for node in G.nodes:
+        if G.nodes[node]['state'] == 'exposed':
+            if G.nodes[node].get('directed') == '1':
+                directed = directed + 1
+            elif G.nodes[node].get('directed') == '0':
+                undirected = undirected + 1
+    return directed, undirected
