@@ -2,6 +2,8 @@ import networkx as nx
 from pprint import pprint
 import plotly.express as px
 import pandas as pd
+from plotly.offline import plot
+
 
 def getKey(neighbors):
     ret = ''
@@ -55,7 +57,6 @@ if __name__ == "__main__":
 
 
     graph_list = ['500-users', '1000-users', '1500-users', '2000-users']
-    # graph_list = ['500-users']
     for graph in graph_list:
         data[graph] = dict()
         G = nx.read_gexf(f'./{graph}.gexf')
@@ -75,15 +76,15 @@ if __name__ == "__main__":
         })
         print(df)
 
-        # test with px.line
         fig = px.scatter(
             df,
             x="Number of Links",
             y="Number of Nodes"
         )
         fig.update_layout(title=f"{graph}-graph nodes distribution")
-        fig.show()
-        # fig.write_image(f"{graph}.pdf")
+
+        plot(fig, filename=f"{graph}.html")
+        fig.write_image(f"{graph}.pdf")
 
         del df
     
