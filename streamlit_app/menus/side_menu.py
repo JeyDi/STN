@@ -87,7 +87,7 @@ def menu_graph_generator():
         "Dataset Path", value="./data/conte_followers.csv"
     )
     follower_number = st.sidebar.number_input(
-        "Level of graph distance", min_value=1, max_value=2000, value=500
+        "Number of users in the graph", min_value=1, max_value=2000, value=500
     )
     level2_path = st.sidebar.text_input(
         "Level 2 followers path", value="./data/conte_followers"
