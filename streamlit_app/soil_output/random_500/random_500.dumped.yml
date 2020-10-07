@@ -1,5 +1,5 @@
 default_state: {}
-dir_path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/simulation"
+dir_path: "/mnt/c/Users/Vittorio/Documents/universit\xE0/SistemiComplessi/STN/STN/streamlit_app/simulation/config"
 environment_agents: []
 environment_class: Environment
 environment_params: {}
@@ -20,25 +20,25 @@ seed: None
 states:
   0:
     agent_type: entities.OpinionLeader
-  9659:
+  3446:
     agent_type: entities.Bot
-  13368:
+  10282:
     agent_type: entities.Bot
-  16105:
+  19489:
     agent_type: entities.Bot
-  16631:
+  23146:
     agent_type: entities.Bot
-  16854:
+  24446:
     agent_type: entities.Bot
-  17600:
+  27908:
     agent_type: entities.Bot
-  23469:
+  31981:
     agent_type: entities.Bot
-  24459:
+  33774:
     agent_type: entities.Bot
-  28908:
+  34832:
     agent_type: entities.Bot
-  30903:
+  36476:
     agent_type: entities.Bot
 topology:
   directed: false
