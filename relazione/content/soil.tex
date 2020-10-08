@@ -1,1 +1,16 @@
-\section{SOIL}
+\section{Soil}
+    Soil è un modulo Python ABSS\footnote{Agent-Based Social Simulation}. Ciò vuol dire che permette di sfruttare uno scheletro di base per lanciare simulazioni di modelli sociali tramite la personalizzazione degli agenti.
+    
+    È stato scelto Soil in quanto è un progetto open source, costantemente in crescita e aggiornato, cross-platform e permette di utilizzare standard di moduli già rodati e ampiamente utilizzati e conosciuti.
+    
+    Secondo le nostre ricerche, la documentazione di Soil non risulta sempre corretta e aggiornata, tuttavia essendo un progetto open source è possibile ottenere informazioni relative al funzionamento di determinate utility in modo abbastanza agevole.
+    Oltre alla documentazione, Soil offre una serie di esempi di personalizzazione e caratterizzazione degli agenti, con i corrispettivi file YAML che permettono di specificare una serie di parametri necessari per poter definire le varie casistiche della simulazione.
+    
+    Nel capitolo seguente verrà spiegato il funzionamento di Soil per quanto riguarda l’uso che ne è stato fatto durante lo sviluppo di questo progetto. Adottando l'utilizzo dei file di configurazione possiamo definire quindi due componenti principali nello sviluppo di una simulazione:
+    
+    \begin{itemize}
+        \item un modulo python per la definizione degli agenti veri e propri, con i relativi stati e varie funzionalità per definirne il comportamento;
+        \item un file di configurazione YAML (per ogni simulazione) dedito alla definizioni di specifici parametri.
+    \end{itemize}
+    
+    % aggiungere informazioni dalla documentazione di Soil (immagine schema, nozioni da "Configuring a simulation" e "Tutorial") https://soilsim.readthedocs.io/en/latest/index.html
