@@ -119,13 +119,48 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
     Si è così scelto di usare uno scraper per velocizzare il processo, in particolare è stato usato lo scraper TWINT\cite{Twint} (Twint Intelligence Tool).
     \subsection{Bot}
     Per determinare la posizione dei Bot all'interno della rete sono state calcolate le principali misure di centralità dei nodi all'interno del grafo, basate su:
-    
-    \subsection{Simulazioni}
+    \\
+    \textbf{In-Degree}
+    \\
+    Numero di archi entranti di un nodo, misura quanto un utente è seguito.\\
+    Formalmente:
 
+    \\
+    \textbf{Betweenness}
+    \\
+    Numero di volte che un nodo funge da ponte lungo il percorso più breve tra 2 nodi; su una rete sociale corrisponde a quanto un utente si trova sui percorsi di comunicazione tra gli altri utenti.\\
+    Formalmente:
+
+    \\
+    \textbf{Autovettori}
+    \\
+    Misura l' importanza di un nodo, un nodo è considerato importante se puntato da altri nodi importanti. \\
+    Formalmente:
+    \\
+    É stata inoltre, svolta una simulazione considerando una posizione randomica dei Bot.
+
+    \subsection{Simulazioni}
+    Durante le simulazioni è stato selezionato come Opinion Leader l’esatto nodo che, all’interno del grafo ottenuto grazie allo scraper, rappresenta il Presidente del Consiglio. I Bot all’interno delle simulazioni sono sempre 10 tuttavia differiscono per la loro posizione all’interno della rete. Poiché gli stessi nodi con in-degree maggiore sono gli stessi con betweenness maggiore allora la simulazione sarà unica. Si avranno quindi tre simulazioni:
+    \begin{itemize}
+    \item Simulation_BTW: simulazione nella quale i nodi selezionati come Bot sono posti nei nodi aventi betweenness maggiore.
+    \item Simulation_Eigenvector: simulazione nella quale i nodi selezionati come Bot sono i 10 nodi considerati più influenti sulla base degli eigenvector score.
+    \item Simulation_Random: simulazione nella quale i nodi selezionati come Bot sono presi in modo random.
+    \end{itemize}
     \subsection{Configurazione di SOIL}
 
         \subsubsection{File Python}
-
+        Nel file PY viene descritto il modulo python che verrà poi usato per avviare la simulazione seguendo le direttive e le caratteristiche descritte nel file YML. Per ogni agente viene quindi creata una classe la quale avrà degli stati e dei metodi che ne descrivono i comportamenti e interazioni tra i vari agenti. Nel nostro caso ci sono 3 tipologie di agenti:
+        \begin{itemize}
+        \item OpinionLeader: è l’utente dal quale è stato generato il grafo e da cui tramite scraper si sono ottenuti i suoi follower e poi i follower dei follower. Nel nostro caso è l’utente Conte.
+        \item Bot: sono i bot che hanno interesse a far espandere una notizia pubblicando spesso contenuti, hanno quindi un potere di influenza mediamente alto. La selezione di questi bot viene effettuata nel file BotSelection.py, tale selezione può avvenire sulla base dei parametri descritti nella sezione [Sez. Bot] TODO.
+        \item User: sono gli utenti comuni, possono trovarsi in tre stati:
+          \begin{itemize}
+          \item not_exposed: l’utente non è entrato per niente in contatto con una determinata notizia o informazione, nè perchè è stato esposto nè guardando la home di tweeter o cercando manualmente (quest’ultima casistica è gestita dal campo prob_search_spread).
+          \item exposed: l’utente è entrato in contatto con la notizia ma non ha ancora effettuato nessuna azione,quindi non ha mostrato agli altri della sua rete di essere entrato in contatto con tale informazione.
+          \item infected: l’utente non solo è stato esposto ma ha anche palesato il suo essere entrato in contatto con la notizia effettuando un'azione e quindi potenzialmente è in una condizione in cui potrebbe esporre altri utenti.
+          \end{itemize}
+        \end{itemize}
+        All’inizio della simulazione i soli che sono considerati esposti sono l’opinion leader e i bot dai quali appunto si propaga l’informazione. Per una questione di maggior controllo dei risultati finali, e quindi per vedere chi e quanto ha contribuito alla propagazione, è stato introdotto un parametro type. Quest’ultimo ha valore 1 nel caso la propagazione è partita dall’opinion leader, 2 nel caso avviene dai bot; utenti infettati da altri utenti propagano comunque il tipo da cui sono stati infettati, e quindi ad esempio un utente infettato da un utente che era stato in principio infettato da un bot avrà tipo 2 e sarà quindi conteggiato tra quelli infettati dai bot.
         \subsubsection{File YML}
 
     \subsection{Web app}
