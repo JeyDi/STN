@@ -1,19 +1,133 @@
 \section{Soluzione proposta}
-
+Dopo una attenta lettura ai paper, abbiamo impostato le nostre domande di ricerca, in modo da avere ben chiaro in mente l'obiettivo che volevamo prefiggerci di raggiungere con tale progetto. Le domande al quale tale documento cerca di dare risposta sono le seguenti:
+\begin{itemize}
+  \item All'interno di una rete sociale come massimizzare il numero di persone che visualizzano una notizia in un numero di step determinato?
+  \item Dove è possibile posizionare i bot che generano i contenuti per massimizzare la diffusione ed eventualmente minimizzare il tempo di diffusione?
+  \item E' possibile distinguere chi è venuto in contatto con una notizia pubblicata da un determinato tipo di utente (bot o opinion leader) e che informazione possiamo ottenere da tali caratteristiche?
+\end{itemize}
+Abbiamo scelto quindi la rete di partenza (grafo dei follower del presidente del Consiglio Giuseppe Conte) e da essa abbiamo fatto girare una serie di simulazioni con SOIL. Abbiamo inoltre scelto di seguire le infezioni considerando le differenze tra infetti e esposti e le differenze e per ognuna delle due categorie abbiamo differenziato tra infezione diretta e indiretta, distinguendo anche da chi proviene tale infezione: da bot, da opinion leader o da un altro utente.
+\\
+Tale progetto è implementato totalmente in Python e i tools e le librerie usate sono le seguenti:
+\begin{itemize}
+\item Twint: scraper per Twitter;
+\item Networkx: per gestire le reti e quindi i grafi;
+\item Gephi: per la visualizzazione dei grafi;
+\item Plotly: per visualizzare i grafici finali in modo da avere un riscontro visivo dei risultati;
+\item Soil: per implementare un modello di simulazione multi-agente;
+\item Streamlit: per costruire un'interfaccia grafica in modo da modellare e personalizzare il modello in modo immediato e senza dover passare direttamente dal codice.
+\item Pandas: per gestire i dataframe.
+\end{itemize}
+Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a validarle tramite il modello proposto. Tali assunzioni ci hanno guidato nell’impostare il modello, inserendo le probabilità che più ci sembravano vicine alla realtà. Le assunzioni prese in considerazione sono le seguenti:
+\begin{itemize}
+\item l'Opinion Leader ha influenza maggiore sulla rete rispetto ai Bot;
+\item ma i Bot hanno un'influenza più sparsa (ampia);
+\item la probabilità di infezione tra utenti è molto bassa;
+\item anche la probabilità che l’utente effettui qualche azione (retweet, commento...) dopo essere entrato in contatto con la notizia è bassa e quindi la probabilità di passare da esposto a infetto si alza di molto solo se molti dei suoi vicini hanno risposto a loro volta alla notizia.
+\end{itemize}
     \subsection{Grafo}
-    
+    \begin{table}[h!]
+    \begin{tabular}{ |c|c| }
+     \hline
+     0-5 & 38353 \\
+     \hline
+     6-10 & 41 \\
+     \hline
+     11-20 & 21 \\
+     \hline
+     21-50 & 34 \\
+     \hline
+     51-100 & 13 \\
+     \hline
+     101-250 & 10 \\
+     \hline
+     251-500 & 12 \\
+     \hline
+     500+ & 12 \\
+     \hline
+    \end{tabular}
+    \caption{Grafo 500-users}
+    \end{table}
+    \begin{table}[h!]
+    \begin{tabular}{ |c|c| }
+     \hline
+     0-5 & 105493 \\
+     \hline
+     6-10 & 80 \\
+     \hline
+     11-20 & 37 \\
+     \hline
+     21-50 & 54 \\
+     \hline
+     51-100 & 35 \\
+     \hline
+     101-250 & 30 \\
+     \hline
+     251-500 & 21 \\
+     \hline
+     500+ & 35 \\
+     \hline
+    \end{tabular}
+    \caption{Grafo 1000-users}
+    \end{table}
+    \begin{table}[h!]
+    \begin{tabular}{ |c|c| }
+     \hline
+     0-5 & 127327 \\
+     \hline
+     6-10 & 102 \\
+     \hline
+     11-20 & 50 \\
+     \hline
+     21-50 & 67 \\
+     \hline
+     51-100 & 47 \\
+     \hline
+     101-250 & 45 \\
+     \hline
+     251-500 & 27 \\
+     \hline
+     500+ & 46 \\
+     \hline
+    \end{tabular}
+    \caption{Grafo 1500-users}
+    \end{table}
+    \begin{table}[h!]
+    \begin{tabular}{ |c|c| }
+     \hline
+     0-5 & 215437 \\
+     \hline
+     6-10 & 122 \\
+     \hline
+     11-20 & 64 \\
+     \hline
+     21-50 & 89 \\
+     \hline
+     51-100 & 58 \\
+     \hline
+     101-250 & 57 \\
+     \hline
+     251-500 & 37 \\
+     \hline
+     500+ & 57 \\
+     \hline
+    \end{tabular}
+    \caption{Grafo 2000-users}
+    \end{table}
     \subsection{Opinion Leader}
-    
+    Il social network scelto per effettuare la simulazione è stato Twitter, in particolare è stata scelta la rete sociale dell’attuale presidente del consiglio Giuseppe Conte (username: @GiuseppeConteIT\cite{twitterGiuseppeConte}) che attualmente conta 752.814 follower. Per motivi computazionali non è stato possibile analizzare il grafo completo, quindi sono stati considerati 500 followers e 2 livelli di profondità, per un totale di TODO \\
+    Per scaricare i dati necessari, Twitter mette a disposizione delle API ufficiali, ma troppo limitate in termini di richieste per unità di tempo (nella versione standard per ottenere la lista dei followers sono permesse 15 richieste ogni 15 minuti), in particolare avendo la necessità di scaricare informazioni riguardanti migliaia di utenti.\\
+    Si è così scelto di usare uno scraper per velocizzare il processo, in particolare è stato usato lo scraper TWINT\cite{Twint} (Twint Intelligence Tool).
     \subsection{Bot}
+    Per determinare la posizione dei Bot all'interno della rete sono state calcolate le principali misure di centralità dei nodi all'interno del grafo, basate su:
     
     \subsection{Simulazioni}
-    
+
     \subsection{Configurazione di SOIL}
-    
+
         \subsubsection{File Python}
-    
+
         \subsubsection{File YML}
-    
+
     \subsection{Web app}
-    
+
         \subsubsection{Uso di streamlit}
