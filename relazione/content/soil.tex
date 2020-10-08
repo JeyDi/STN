@@ -3,14 +3,43 @@
     
     È stato scelto Soil in quanto è un progetto open source, costantemente in crescita e aggiornato, cross-platform e permette di utilizzare standard di moduli già rodati e ampiamente utilizzati e conosciuti.
     
-    Secondo le nostre ricerche, la documentazione di Soil non risulta sempre corretta e aggiornata, tuttavia essendo un progetto open source è possibile ottenere informazioni relative al funzionamento di determinate utility in modo abbastanza agevole.
-    Oltre alla documentazione, Soil offre una serie di esempi di personalizzazione e caratterizzazione degli agenti, con i corrispettivi file YAML che permettono di specificare una serie di parametri necessari per poter definire le varie casistiche della simulazione.
+    \subsection{Struttura di Soil}
+        La logica di funzionamento di Soil si articola in due componenti principali: la definizione degli agenti e la configurazione della simulazione.
+        
+        \begin{itemize}
+            \item \textbf{Agenti} - la descrizione di un agente avviene mediante la definizione di una classe dedita all'implementazione del comportamento dell'agente;
+            \item \textbf{Simulazione} - configurazione che include vari aspetti della simulazione come numero e tipo di agenti, topologia della rete, nome della simulazione, eventuali parametri d'ambiente etc...
+        \end{itemize}
+        
+        La figura \ref{fig:soil_structure} mostra la struttura schematizzata del funzionamento di Soil. Per la definizione della \textit{topologia} della rete viene utilizzata un'istanza di un grafo della libreria \texttt{networkx}. In seguito alla definizione di tale topologia, Soil esegue l'associazione tra ogni nodo e il suo corrispettivo agente, quest'ultima azione è controllata dall'ambiente.
+        
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/soil.png}
+            \caption{Struttura di Soil}
+            \label{fig:soil_structure}
+        \end{figure}
+        
+        La configurazione di ogni singola simulazione può avvenire a livello di codice o tramite un file di configurazione (con estensione JSON\footnote{JavaScript Object Notation} o YAML). L'utilizzo di file di configurazione permette una descrizione dichiarativa e riproducibile. 
+        
+        Riportiamo una rapida descrizione dei parametri configurabili di una simulazione:
+        
+        \begin{itemize}
+            \item \textbf{name} - nome associato alla simulazione;
+            \item \textbf{max\_time} - numero di step;
+            \item \textbf{num\_trials} - numero di simulazioni da eseguire;
+            \item \textbf{interval} - frequenza di aggiornamento degli stati degli agenti (secondi);
+            \item \textbf{network\_params} - topologia della rete. Soil rende possibile il caricamento di una rete esistente (tramite la lettura di un apposito file) oppure la creazione di una rete randomica tramite l'utilizzo dei \texttt{generatori} forniti dalla libreria networkx;
+            \item \textbf{load\_module} - nome del modulo python in cui sono definite le classi che implementano gli agenti;
+            \item \textbf{network\_agents} - permette di definire l'associazione tra nodi e agenti; \'E possibile associare direttamente il tipo di agente sul nodo specifico oppure definire il ratio di distribuzione di diversi tipi di agenti tramite il parametro \texttt{weight};
+            \item \textbf{environment\_agents} - simile alla definizione precedenti, tuttavia questi agenti non vengono assegnati ad alcun nodo;
+            \item \textbf{environment\_params} - definizione di parametri dell'ambiente, accessibili da tutti gli agenti. Nell'ambiente viene memorizzato lo stato condiviso della simulazione.
+        \end{itemize}
     
-    Nel capitolo seguente verrà spiegato il funzionamento di Soil per quanto riguarda l’uso che ne è stato fatto durante lo sviluppo di questo progetto. Adottando l'utilizzo dei file di configurazione possiamo definire quindi due componenti principali nello sviluppo di una simulazione:
+        I risultati di una simulazione sono memorizzati automaticamente tramite un database \texttt{sqlite}, inoltre è possibile specificare formati aggiuntivi di esportazione, tra i quali: YAML/JSON, GEXF\footnote{Graph Exchange XML Format} e CSV\footnote{Comma Separated Values}.\\
     
-    \begin{itemize}
-        \item un modulo python per la definizione degli agenti veri e propri, con i relativi stati e varie funzionalità per definirne il comportamento;
-        \item un file di configurazione YAML (per ogni simulazione) dedito alla definizioni di specifici parametri.
-    \end{itemize}
     
-    % aggiungere informazioni dalla documentazione di Soil (immagine schema, nozioni da "Configuring a simulation" e "Tutorial") https://soilsim.readthedocs.io/en/latest/index.html
+    Secondo le nostre ricerche, la documentazione di Soil non risulta sempre corretta e aggiornata, tuttavia essendo un progetto open source è possibile ottenere informazioni relative al funzionamento di determinate utility in modo abbastanza agevole.\\
+    
+    
+    Nel capitolo seguente verrà spiegato il funzionamento di Soil per quanto riguarda l’uso che ne è stato fatto durante lo sviluppo di questo progetto.
