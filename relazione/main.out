@@ -1,38 +1,39 @@
 \BOOKMARK [1][-]{section.1}{Abstract}{}% 1
-\BOOKMARK [1][-]{section.2}{Introduzione}{}% 2
-\BOOKMARK [1][-]{section.3}{Richiami alla teoria}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Grafo}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Agenti Intelligenti}{section.3}% 5
-\BOOKMARK [3][-]{subsubsection.3.2.1}{Agente reattivo semplice}{subsection.3.2}% 6
-\BOOKMARK [3][-]{subsubsection.3.2.2}{Agenti reattivi basati su modello}{subsection.3.2}% 7
-\BOOKMARK [3][-]{subsubsection.3.2.3}{Agenti basati su obiettivi}{subsection.3.2}% 8
-\BOOKMARK [3][-]{subsubsection.3.2.4}{Agenti basati sull'utilit\340}{subsection.3.2}% 9
-\BOOKMARK [2][-]{subsection.3.3}{Sistemi multi-agente}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.4}{Rete sociale ad agenti}{section.3}% 11
-\BOOKMARK [3][-]{subsubsection.3.4.1}{Densit\340 della rete}{subsection.3.4}% 12
-\BOOKMARK [3][-]{subsubsection.3.4.2}{Lunghezza del cammino \(Distanza\)}{subsection.3.4}% 13
-\BOOKMARK [3][-]{subsubsection.3.4.3}{Connessione}{subsection.3.4}% 14
-\BOOKMARK [3][-]{subsubsection.3.4.4}{Invarianza di scala}{subsection.3.4}% 15
-\BOOKMARK [2][-]{subsection.3.5}{Misure di valutazione}{section.3}% 16
-\BOOKMARK [3][-]{subsubsection.3.5.1}{Grado e ordine di un grafo}{subsection.3.5}% 17
-\BOOKMARK [3][-]{subsubsection.3.5.2}{Densit\340 di un grafo}{subsection.3.5}% 18
-\BOOKMARK [3][-]{subsubsection.3.5.3}{Centralit\340}{subsection.3.5}% 19
-\BOOKMARK [2][-]{subsection.3.6}{Modelli epidemiologici compartimentali}{section.3}% 20
-\BOOKMARK [1][-]{section.4}{Stato dell'arte}{}% 21
-\BOOKMARK [1][-]{section.5}{SOIL}{}% 22
-\BOOKMARK [1][-]{section.6}{Soluzione proposta}{}% 23
-\BOOKMARK [2][-]{subsection.6.1}{Grafo}{section.6}% 24
-\BOOKMARK [2][-]{subsection.6.2}{Opinion Leader}{section.6}% 25
-\BOOKMARK [2][-]{subsection.6.3}{Bot}{section.6}% 26
-\BOOKMARK [2][-]{subsection.6.4}{Simulazioni}{section.6}% 27
-\BOOKMARK [2][-]{subsection.6.5}{Configurazione di SOIL}{section.6}% 28
-\BOOKMARK [3][-]{subsubsection.6.5.1}{File Python}{subsection.6.5}% 29
-\BOOKMARK [3][-]{subsubsection.6.5.2}{File YML}{subsection.6.5}% 30
-\BOOKMARK [2][-]{subsection.6.6}{Web app}{section.6}% 31
-\BOOKMARK [3][-]{subsubsection.6.6.1}{Uso di streamlit}{subsection.6.6}% 32
-\BOOKMARK [1][-]{section.7}{Risultati ottenuti}{}% 33
-\BOOKMARK [2][-]{subsection.7.1}{Random}{section.7}% 34
-\BOOKMARK [2][-]{subsection.7.2}{Betweenness e In-Degree}{section.7}% 35
-\BOOKMARK [2][-]{subsection.7.3}{Eigenvector}{section.7}% 36
-\BOOKMARK [1][-]{section.8}{Conclusioni}{}% 37
-\BOOKMARK [1][-]{section.9}{Sviluppi futuri}{}% 38
+\BOOKMARK [1][-]{section.2}{Sommario}{}% 2
+\BOOKMARK [1][-]{section.3}{Introduzione}{}% 3
+\BOOKMARK [1][-]{section.4}{Richiami alla teoria}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Grafo}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Agenti Intelligenti}{section.4}% 6
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Agente reattivo semplice}{subsection.4.2}% 7
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Agenti reattivi basati su modello}{subsection.4.2}% 8
+\BOOKMARK [3][-]{subsubsection.4.2.3}{Agenti basati su obiettivi}{subsection.4.2}% 9
+\BOOKMARK [3][-]{subsubsection.4.2.4}{Agenti basati sull'utilit\340}{subsection.4.2}% 10
+\BOOKMARK [2][-]{subsection.4.3}{Sistemi multi-agente}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.4}{Rete sociale ad agenti}{section.4}% 12
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Densit\340 della rete}{subsection.4.4}% 13
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Lunghezza del cammino \(Distanza\)}{subsection.4.4}% 14
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Connessione}{subsection.4.4}% 15
+\BOOKMARK [3][-]{subsubsection.4.4.4}{Invarianza di scala}{subsection.4.4}% 16
+\BOOKMARK [2][-]{subsection.4.5}{Misure di valutazione}{section.4}% 17
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Grado e ordine di un grafo}{subsection.4.5}% 18
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Densit\340 di un grafo}{subsection.4.5}% 19
+\BOOKMARK [3][-]{subsubsection.4.5.3}{Centralit\340}{subsection.4.5}% 20
+\BOOKMARK [2][-]{subsection.4.6}{Modelli epidemiologici compartimentali}{section.4}% 21
+\BOOKMARK [1][-]{section.5}{Stato dell'arte}{}% 22
+\BOOKMARK [1][-]{section.6}{SOIL}{}% 23
+\BOOKMARK [1][-]{section.7}{Soluzione proposta}{}% 24
+\BOOKMARK [2][-]{subsection.7.1}{Grafo}{section.7}% 25
+\BOOKMARK [2][-]{subsection.7.2}{Opinion Leader}{section.7}% 26
+\BOOKMARK [2][-]{subsection.7.3}{Bot}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.4}{Simulazioni}{section.7}% 28
+\BOOKMARK [2][-]{subsection.7.5}{Configurazione di SOIL}{section.7}% 29
+\BOOKMARK [3][-]{subsubsection.7.5.1}{File Python}{subsection.7.5}% 30
+\BOOKMARK [3][-]{subsubsection.7.5.2}{File YML}{subsection.7.5}% 31
+\BOOKMARK [2][-]{subsection.7.6}{Web app}{section.7}% 32
+\BOOKMARK [3][-]{subsubsection.7.6.1}{Uso di streamlit}{subsection.7.6}% 33
+\BOOKMARK [1][-]{section.8}{Risultati ottenuti}{}% 34
+\BOOKMARK [2][-]{subsection.8.1}{Random}{section.8}% 35
+\BOOKMARK [2][-]{subsection.8.2}{Betweenness e In-Degree}{section.8}% 36
+\BOOKMARK [2][-]{subsection.8.3}{Eigenvector}{section.8}% 37
+\BOOKMARK [1][-]{section.9}{Conclusioni}{}% 38
+\BOOKMARK [1][-]{section.10}{Sviluppi futuri}{}% 39
