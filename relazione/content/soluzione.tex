@@ -1,11 +1,11 @@
 \section{Soluzione proposta}
 Dopo una attenta lettura ai paper, abbiamo impostato le nostre domande di ricerca, in modo da avere ben chiaro in mente l'obiettivo che volevamo prefiggerci di raggiungere con tale progetto. Le domande al quale tale documento cerca di dare risposta sono le seguenti:
 \begin{itemize}
-  \item All'interno di una rete sociale come massimizzare il numero di persone che visualizzano una notizia in un numero di step determinato?
+  \item All'interno di una rete sociale, come massimizzare il numero di persone che visualizzano una notizia in un numero di step determinato?
   \item Dove è possibile posizionare i bot che generano i contenuti per massimizzare la diffusione ed eventualmente minimizzare il tempo di diffusione?
-  \item E' possibile distinguere chi è venuto in contatto con una notizia pubblicata da un determinato tipo di utente (bot o opinion leader) e che informazione possiamo ottenere da tali caratteristiche?
+  \item \'E possibile distinguere chi è venuto in contatto con una notizia pubblicata da un determinato tipo di utente (bot o opinion leader) e che informazione possiamo ottenere da tali caratteristiche?
 \end{itemize}
-Abbiamo scelto quindi la rete di partenza (grafo dei follower del presidente del Consiglio Giuseppe Conte) e da essa abbiamo fatto girare una serie di simulazioni con SOIL. Abbiamo inoltre scelto di seguire le infezioni considerando le differenze tra infetti e esposti e le differenze e per ognuna delle due categorie abbiamo differenziato tra infezione diretta e indiretta, distinguendo anche da chi proviene tale infezione: da bot, da opinion leader o da un altro utente.
+Abbiamo scelto e ricostruito la rete di partenza (grafo dei follower del presidente del Consiglio Giuseppe Conte) e su di essa sono state eseguite una serie di simulazioni con Soil. Abbiamo inoltre scelto di monitorare le infezioni (da considerarsi come diffusione di notizie) analizzando le differenze tra infetti ed esposti. Abbiamo posto attenzione anche al tipo di infezione: se diretta e indiretta, distinguendo anche da chi proviene tale infezione: da bot, da opinion leader o da un altro utente.
 \\
 Tale progetto è implementato totalmente in Python e i tools e le librerie usate sono le seguenti:
 \begin{itemize}
