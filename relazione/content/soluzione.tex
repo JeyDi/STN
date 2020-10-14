@@ -117,7 +117,7 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
     Il social network scelto per effettuare la simulazione è stato Twitter, in particolare è stata scelta la rete sociale dell’attuale presidente del consiglio Giuseppe Conte (username: @GiuseppeConteIT\cite{twitterGiuseppeConte}) che attualmente conta 752.814 follower. Per motivi computazionali non è stato possibile analizzare il grafo completo, quindi sono stati considerati 500 followers e 2 livelli di profondità, per un totale di TODO \\
     Per scaricare i dati necessari, Twitter mette a disposizione delle API ufficiali, ma troppo limitate in termini di richieste per unità di tempo (nella versione standard per ottenere la lista dei followers sono permesse 15 richieste ogni 15 minuti), in particolare avendo la necessità di scaricare informazioni riguardanti migliaia di utenti.\\
     Si è così scelto di usare uno scraper per velocizzare il processo, in particolare è stato usato lo scraper TWINT\cite{Twint} (Twint Intelligence Tool).
-    \subsection{Bot}
+    \subsection{Bot}\label{Bot}
     Per determinare la posizione dei Bot all'interno della rete sono state calcolate le principali misure di centralità dei nodi all'interno del grafo, basate su:
     \\
     \textbf{In-Degree}
@@ -134,7 +134,7 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
     \\
     \textbf{Autovettori}
     \\
-    Misura l' importanza di un nodo, un nodo è considerato importante se puntato da altri nodi importanti. \\
+    Misura l'importanza di un nodo, un nodo è considerato importante se puntato da altri nodi importanti. \\
     Formalmente:
     \\
     É stata inoltre, svolta una simulazione considerando una posizione randomica dei Bot.
@@ -146,13 +146,13 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
     \item Simulation_Eigenvector: simulazione nella quale i nodi selezionati come Bot sono i 10 nodi considerati più influenti sulla base degli eigenvector score.
     \item Simulation_Random: simulazione nella quale i nodi selezionati come Bot sono presi in modo random.
     \end{itemize}
-    \subsection{Configurazione di SOIL}
+    \subsection{Configurazione di SOIL}\label{ConfigSoil}
 
         \subsubsection{File Python}
         Nel file PY viene descritto il modulo python che verrà poi usato per avviare la simulazione seguendo le direttive e le caratteristiche descritte nel file YML. Per ogni agente viene quindi creata una classe la quale avrà degli stati e dei metodi che ne descrivono i comportamenti e interazioni tra i vari agenti. Nel nostro caso ci sono 3 tipologie di agenti:
         \begin{itemize}
         \item OpinionLeader: è l’utente dal quale è stato generato il grafo e da cui tramite scraper si sono ottenuti i suoi follower e poi i follower dei follower. Nel nostro caso è l’utente Conte.
-        \item Bot: sono i bot che hanno interesse a far espandere una notizia pubblicando spesso contenuti, hanno quindi un potere di influenza mediamente alto. La selezione di questi bot viene effettuata nel file BotSelection.py, tale selezione può avvenire sulla base dei parametri descritti nella sezione [Sez. Bot] TODO.
+        \item Bot: sono i bot che hanno interesse a far espandere una notizia pubblicando spesso contenuti, hanno quindi un potere di influenza mediamente alto. La selezione di questi bot viene effettuata nel file BotSelection.py, tale selezione può avvenire sulla base dei parametri descritti nella sezione ~\ref{Bot}.
         \item User: sono gli utenti comuni, possono trovarsi in tre stati:
           \begin{itemize}
           \item not_exposed: l’utente non è entrato per niente in contatto con una determinata notizia o informazione, nè perchè è stato esposto nè guardando la home di tweeter o cercando manualmente (quest’ultima casistica è gestita dal campo prob_search_spread).
@@ -162,7 +162,90 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
         \end{itemize}
         All’inizio della simulazione i soli che sono considerati esposti sono l’opinion leader e i bot dai quali appunto si propaga l’informazione. Per una questione di maggior controllo dei risultati finali, e quindi per vedere chi e quanto ha contribuito alla propagazione, è stato introdotto un parametro type. Quest’ultimo ha valore 1 nel caso la propagazione è partita dall’opinion leader, 2 nel caso avviene dai bot; utenti infettati da altri utenti propagano comunque il tipo da cui sono stati infettati, e quindi ad esempio un utente infettato da un utente che era stato in principio infettato da un bot avrà tipo 2 e sarà quindi conteggiato tra quelli infettati dai bot.
         \subsubsection{File YML}
+        Il file YML racchiude le specifiche delle simulazioni che saranno lanciate con soil.\\
+        Tra i parametri personalizzabili particolarmente utili sono:
+        \begin{itemize}
+          \item max_time: numero di step effettuati al massimo nella simulazione.
+          \item num_trials: parametro tramite il quale si può decidere se rifare la stessa simulazione più volte indicando il numero di volte che sarà lanciata.
+          \item network_params: parametro nel quale si seleziona il grafo su cui sarà effettuata la simulazione, può essere o creato in maniera random o preso da un grafo già creato indicando il file GEXF.
+          \item states: parametro che permette di personalizzare il singolo nodo tramite il suo id. Ciò ci ha permesso di selezionare la posizione sempre fissa di Conte e di verificare come le simulazioni cambiassero in base alla marcatura di alcuni nodi come Bot sulla base di dei parametri specifici, indicati nella sezione ~\ref{Bot}.
+        \end{itemize}
 
     \subsection{Web app}
+      Per ragioni di riproducibilità più agevole e per estensibilità è stato scelto di sviluppare una web app che permettesse l’esecuzione di tutte le fasi contemplate dall’app e anche di ottenere i risultati in forma di grafici.\\
+      Per lo sviluppo della webapp è stata usata la libreria streamlit. Streamlit è un framework open-source in Python. E’ particolarmente utile per data scientists e sviluppatori che lavorano nel campo di machine learning.\\
 
+      Di seguito si illustrano le varie fasi dell’app.
+        \subsubsection{Fasi dell'app}
+          \\
+          \textbf{Download dati da Twitter}
+          \\
+          In questa fase abbiamo utilizzato lo scraper TWINT per ottenere i followers di Conte e, a loro volta, i followers dei followers di Conte. Il risultato ottenuto è un file .csv per ogni utente di Twitter, all'interno del quale sono segnati gli user dei followers.
+          \\
+          \textbf{Creazione del grafo}
+          \\
+          Da questi file .csv ottenuti dalla fase precedente, si è creato il grafo orientato (secondo la relazione di “Follow”) tramite la libreria networkx.
+          \\
+          \textbf{Posizionamento Bot e simulazione SOIL}
+          \\
+          Oltre a configurare e far eseguire le simulazioni di soil, così come spiegato nella sezione ~\ref{ConfigSoil}, in tale fase sono state effettuate le principali misure di centralità dei nodi nel grafo in modo da determinare la posizione dei Bot, ed effettuate le simulazioni appropriate.
+          \\
+          \textbf{Visualizzazione grafo risultante}
+          \\
+          In questa fase vengono mostrati i risultati delle simulazioni in forma di grafo. I nodi del grafo sono stati colorati differentemente a seconda dello stato dell’agente corrispondente (non esposto, esposto, infetto), inoltre, viene riportato anche il tipo di nodo che ha causato la diffusione/contagio.
+          \\
+          \textbf{Statistiche sulla diffusione}
+          \\
+          A questo punto abbiamo provveduto a calcolare le statistiche ottenute dai risultati, andando a calcolare le percentuali dei non esposti, esposti, infetti, per ogni fase e da chi sono stati infettati o esposti (bot, user, opinion leader).
         \subsubsection{Uso di streamlit}
+          L'app è strutturata con un pannello di configurazione a sinistra.
+          \begin{figure}[H]
+              \includegraphics[width=16cm]{resources/panelApp.png}
+              \caption{Screen dell'app}
+          \end{figure}
+          Da tale pannello è possibile:
+          \begin{itemize}
+            \item Scegliere i parametri per il twitter scraper:
+              \begin{itemize}
+                \item Scegliere lo username dell'account su cui avviare lo scraper.
+                \item Salvare il csv ottenuto.
+                \item Selezionare il path nel quale salvare il csv contenente i follower dell'account scelto.
+                \item Specificare a che livello scendere nel grafo dei follower (1 o 2).
+              \end{itemize}
+            \item Parametri per generare il grafo:
+              \begin{itemize}
+                \item Selezionare il path da cui prendere le informazioni (csv).
+                \item Selezionare la cartella da cui prendere il secondo livello del grafo (se presente).
+                \item Scegliere il nome del grafo.
+                \item Selezionare se salvare il grafo come diretto o indiretto.
+                \item Numero di follower da considerare.
+              \end{itemize}
+            \item Parametri per la selezione dei Bot:
+              \begin{itemize}
+                \item Path del grafo (.gexf).
+                \item Selezione del metodo con cui calcolare i bot.
+                \item Selezionare il numero dei bot da inserire nella rete.
+              \end{itemize}
+            \item Parametri per la simulazione di SOIL:
+              \begin{itemize}
+                \item Path del file yml a partire dal quale configurare la simulazione.
+                \item Scegliere il nome della simulazione.
+                \item Selezionare il path della cartella principale dedicata alle simulazioni.
+                \item Scegliere il numero massimo di iterazioni della simulazione.
+                \item Scegliere il numero di volte che la simulazione sarà lanciata con quei parametri.
+                \item Selezionare il file gexf contenente le caratteristiche del grafo.
+              \end{itemize}
+            \item Parametri per la creazione dei grafici e dei risultati:
+              \begin{itemize}
+                \item Selezione del file del grafo di partenza (.gexf).
+                \item File csv contenente l’output della simulazione di SOIL.
+                \item Nome della simulazione, sulla base della tipologia di selezione dei bot (random, btw o eigenvector).
+                \item Numero di step effettuati durante la simulazione sul grafo.
+                \item Visualizzare o no graficamente il grafo.
+              \end{itemize}
+            \item Parametri per calcolare le statistiche finali:
+              \begin{itemize}
+                \item Nome della simulazione, sulla base della tipologia di selezione dei bot (random, btw o eigenvector).
+                \item Numero di step effettuati durante la simulazione sul grafo.
+              \end{itemize}
+          \end{itemize}
