@@ -114,37 +114,60 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
     \caption{Grafo 2000-users}
     \end{table}
     \subsection{Opinion Leader}
-    Il social network scelto per effettuare la simulazione è stato Twitter, in particolare è stata scelta la rete sociale dell’attuale presidente del consiglio Giuseppe Conte (username: @GiuseppeConteIT\cite{twitterGiuseppeConte}) che attualmente conta 752.814 follower. Per motivi computazionali non è stato possibile analizzare il grafo completo, quindi sono stati considerati 500 followers e 2 livelli di profondità, per un totale di TODO \\
+    Il social network scelto per effettuare la simulazione è stato Twitter, in particolare è stata scelta la rete sociale dell’attuale presidente del consiglio Giuseppe Conte (username: @GiuseppeConteIT\cite{twitterGiuseppeConte}) che attualmente conta 752.814 follower. Per motivi computazionali non è stato possibile analizzare il grafo completo, quindi sono stati considerati:
+    \begin{itemize}
+        \item 500 followers e 2 livelli di profondità, per un totale di 38485 utenti
+        \item 1000 followers e 2 livelli di profondità, per un totale di 105774 utenti
+        \item 1500 followers e 2 livelli di profondità, per un totale di 127700 utenti
+        \item 2000 followers e 2 livelli di profondità, per un totale di 215910 utenti
+    \end{itemize}
+   
     Per scaricare i dati necessari, Twitter mette a disposizione delle API ufficiali, ma troppo limitate in termini di richieste per unità di tempo (nella versione standard per ottenere la lista dei followers sono permesse 15 richieste ogni 15 minuti), in particolare avendo la necessità di scaricare informazioni riguardanti migliaia di utenti.\\
     Si è così scelto di usare uno scraper per velocizzare il processo, in particolare è stato usato lo scraper TWINT\cite{Twint} (Twint Intelligence Tool).
     \subsection{Bot}\label{Bot}
     Per determinare la posizione dei Bot all'interno della rete sono state calcolate le principali misure di centralità dei nodi all'interno del grafo, basate su:
-    \\
+    \\\\
     \textbf{In-Degree}
     \\
     Numero di archi entranti di un nodo, misura quanto un utente è seguito.\\
-    Formalmente:
-
+    Formalmente: \\
+    \begin{center}
+        $In-Degree(i) = \displaystyle\sum_{j}x_{ji}$
+    \end{center}
+    dove: \\
+    $x_{ji}$ è un arco diretto dal nodo j al nodo i
+    \\
     \\
     \textbf{Betweenness}
     \\
     Numero di volte che un nodo funge da ponte lungo il percorso più breve tra 2 nodi; su una rete sociale corrisponde a quanto un utente si trova sui percorsi di comunicazione tra gli altri utenti.\\
-    Formalmente:
-
+    Formalmente: \newline
+    \begin{center}
+         $Betweenness(i) = \displaystyle\sum_{j \neq k } g_{jk}(i)/g_{jk}$ 
+    \end{center}
+    dove: \\
+    $g_{jk}$ è il numero di cammini minimi tra i nodi j e k \newline 
+    $g_{jk(i)}$ è il numero di cammini minimi tra i nodi j e k passanti per il nodo i
+   \\
     \\
     \textbf{Autovettori}
     \\
     Misura l'importanza di un nodo, un nodo è considerato importante se puntato da altri nodi importanti. \\
-    Formalmente:
-    \\
+    Formalmente: \\
+    \begin{center}
+    $EigenvectorCentrality(i) = \frac{1}{\lambda}\displaystyle\sum_{k}a_{k,i}x_{k}$
+    \end{center}
+    dove: \\
+    $A=(a_{i,j})$ è la matrice di adiacenza del grafo.
+\\
     É stata inoltre, svolta una simulazione considerando una posizione randomica dei Bot.
 
     \subsection{Simulazioni}
     Durante le simulazioni è stato selezionato come Opinion Leader l’esatto nodo che, all’interno del grafo ottenuto grazie allo scraper, rappresenta il Presidente del Consiglio. I Bot all’interno delle simulazioni sono sempre 10 tuttavia differiscono per la loro posizione all’interno della rete. Poiché gli stessi nodi con in-degree maggiore sono gli stessi con betweenness maggiore allora la simulazione sarà unica. Si avranno quindi tre simulazioni:
     \begin{itemize}
-    \item Simulation_BTW: simulazione nella quale i nodi selezionati come Bot sono posti nei nodi aventi betweenness maggiore.
-    \item Simulation_Eigenvector: simulazione nella quale i nodi selezionati come Bot sono i 10 nodi considerati più influenti sulla base degli eigenvector score.
-    \item Simulation_Random: simulazione nella quale i nodi selezionati come Bot sono presi in modo random.
+    \item Simulation\_BTW: simulazione nella quale i nodi selezionati come Bot sono posti nei nodi aventi betweenness maggiore.
+    \item Simulation\_Eigenvector: simulazione nella quale i nodi selezionati come Bot sono i 10 nodi considerati più influenti sulla base degli eigenvector score.
+    \item Simulation\_Random: simulazione nella quale i nodi selezionati come Bot sono presi in modo random.
     \end{itemize}
     \subsection{Configurazione di SOIL}\label{ConfigSoil}
 
@@ -155,7 +178,7 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
         \item Bot: sono i bot che hanno interesse a far espandere una notizia pubblicando spesso contenuti, hanno quindi un potere di influenza mediamente alto. La selezione di questi bot viene effettuata nel file BotSelection.py, tale selezione può avvenire sulla base dei parametri descritti nella sezione ~\ref{Bot}.
         \item User: sono gli utenti comuni, possono trovarsi in tre stati:
           \begin{itemize}
-          \item not_exposed: l’utente non è entrato per niente in contatto con una determinata notizia o informazione, nè perchè è stato esposto nè guardando la home di tweeter o cercando manualmente (quest’ultima casistica è gestita dal campo prob_search_spread).
+          \item not\_exposed: l’utente non è entrato per niente in contatto con una determinata notizia o informazione, nè perchè è stato esposto nè guardando la home di tweeter o cercando manualmente (quest’ultima casistica è gestita dal campo prob\_search\_spread).
           \item exposed: l’utente è entrato in contatto con la notizia ma non ha ancora effettuato nessuna azione,quindi non ha mostrato agli altri della sua rete di essere entrato in contatto con tale informazione.
           \item infected: l’utente non solo è stato esposto ma ha anche palesato il suo essere entrato in contatto con la notizia effettuando un'azione e quindi potenzialmente è in una condizione in cui potrebbe esporre altri utenti.
           \end{itemize}
@@ -165,9 +188,9 @@ Siamo quindi partiti da una serie di assunzioni e ipotesi per poi andare a valid
         Il file YML racchiude le specifiche delle simulazioni che saranno lanciate con soil.\\
         Tra i parametri personalizzabili particolarmente utili sono:
         \begin{itemize}
-          \item max_time: numero di step effettuati al massimo nella simulazione.
-          \item num_trials: parametro tramite il quale si può decidere se rifare la stessa simulazione più volte indicando il numero di volte che sarà lanciata.
-          \item network_params: parametro nel quale si seleziona il grafo su cui sarà effettuata la simulazione, può essere o creato in maniera random o preso da un grafo già creato indicando il file GEXF.
+          \item max\_time: numero di step effettuati al massimo nella simulazione.
+          \item num\_trials: parametro tramite il quale si può decidere se rifare la stessa simulazione più volte indicando il numero di volte che sarà lanciata.
+          \item network\_params: parametro nel quale si seleziona il grafo su cui sarà effettuata la simulazione, può essere o creato in maniera random o preso da un grafo già creato indicando il file GEXF.
           \item states: parametro che permette di personalizzare il singolo nodo tramite il suo id. Ciò ci ha permesso di selezionare la posizione sempre fissa di Conte e di verificare come le simulazioni cambiassero in base alla marcatura di alcuni nodi come Bot sulla base di dei parametri specifici, indicati nella sezione ~\ref{Bot}.
         \end{itemize}
 
