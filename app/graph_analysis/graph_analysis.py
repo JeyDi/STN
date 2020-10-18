@@ -81,7 +81,7 @@ if __name__ == "__main__":
             x="Number of Links",
             y="Number of Nodes"
         )
-        fig.update_layout(title=f"{graph}-graph nodes distribution")
+        fig.update_layout(title=f"{graph} nodes distribution")
 
         plot(fig, filename=f"{graph}.html")
         fig.write_image(f"{graph}.pdf")
