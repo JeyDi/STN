@@ -50,7 +50,7 @@ Una volta installato le librerie è sufficiente posizionarsi all'interno della c
 
 Le funzionalità principali dell'applicazione sono:
 
-1. Scraping di nuove informazioni da twitter usando la libreria di Twipy
+1. Scraping di nuove informazioni da twitter usando la libreria di Twint
 2. Creazione del grafo a partire da dati in formato .csv
 3. Configurare e lanciare nuove simulazioni con soil
 4. Visualizzare le informazioni delle simulazioni e i grafici di valutazione
