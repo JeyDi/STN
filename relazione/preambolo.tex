@@ -3,7 +3,6 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage[italian]{babel}
-%\selectlanguage{italian}
 \usepackage[utf8]{inputenc}
 \usepackage[svgnames]{xcolor}
 \usepackage{amsmath}
@@ -11,7 +10,6 @@
 \usepackage{multicol}
 \usepackage{enumitem}
 \usepackage{amssymb}
-
 
 \usepackage{listings}
 \usepackage{afterpage}
@@ -51,11 +49,11 @@ breakatwhitespace=true,
 tabsize=3
 }
 
-
-\textheight=21cm
-\textwidth=17cm
-%\topmargin=-1cm
-\oddsidemargin=0cm
+\usepackage[paper=a4paper,margin=1in]{geometry}
+% \textheight=21cm
+% \textwidth=17cm
+% % \topmargin=-1cm
+% \oddsidemargin=0cm
 \parindent=0mm
 \pagestyle{plain}
 
@@ -68,3 +66,4 @@ tabsize=3
 \addtocounter{unomenos}{-1}
 \stepcounter{unomenos}
 \gdef\@date{ Course \arabic{unomenos}/ 2019}
+

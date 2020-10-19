@@ -1,5 +1,20 @@
 \section{Conclusioni}
-    La maggior diffusione della news all’interno del grafo si è ottenuta selezionando i Bot secondo la misura di centralità della Betweenness, è stata anche l’unica configurazione nella quale gli utenti infetti o esposti hanno superato il numero di utenti non esposti.\newline 
-    In tutte le simulazioni l’infezione è avvenuta per la maggior parte in maniera diretta (cioè dalla propagazione della notizia partita dall’opinion leader o da un bot).
-    \newline
-    Per quanto riguarda la fase di validazione non è stata possibile attuarla. A causa delle forti limitazioni nell'uso di Twitter dovute ad un restringimento delle policy di sicurezza e di accesso non siamo riusciti a validare il modello su casi reali. Le informazioni utilizzate all'interno delle analisi e la topologia della rete sono state ottenute effettuando uno scraping limitato proprio sui dati di twitter. Per la validazione del modello occorrerebbe avere a disposizione più dati e informazioni in modo da migliorare la fase di validazione e valutazione rispetto, ad esempio, a delle situazioni realistiche di diffusione e contaminazione di notizie che si sono verificate nel tempo.
+    Questo studio si basa sulla simulazione della diffusione di informazioni su reti sociali, facendo riferimento in particolare alla rete di Twitter. Di fatto i grafi prodotti sono stati generati partendo da informazioni che hanno un riscontro concreto nella realtà.
+    
+    \hspace{15pt}
+    Tra le tre misure adottate riguardo la scelta del posizionamento dei Bot nella rete, quella della Betweenness è risultata la migliore permettendo una maggiore propagazione della notizia. Questa configurazione è stata l'unica che ha consentito un'esposizione significativa alla notizia, in quanto la somma cumulata di utenti esposti ed infetti è risultata maggiore rispetto agli utenti non esposti. Questo risultato era prevedibile in quanto i nodi selezionati secondo la misura della Betweenness corrispondono ai nodi selezionati secondo l'In-Degree, rappresentando quindi gli utenti con maggior numero di follower (e che potenzialmente hanno maggiore influenza sulla rete) ma che allo stesso tempo si trovano più frequentemente sul percorso più breve tra due nodi.
+    
+    \hspace{15pt}
+    Le metriche basate su autovettori e scelta randomica si sono rivelate piuttosto simili in termini di percentuali di diffusione. Questo risultato era prevedibile considerando posizionamenti casuali dei Bot, tuttavia ci aspettavamo una maggiore influenza da parte di quei nodi selezionati secondo la metrica degli autovettori in quanto questa misura rappresenta l'importanza intrinseca del nodo stesso.
+    Tuttavia questa aspettativa non era così marcata in quanto questa metrica seleziona i nodi in base all'importanza dei vicini, tale logica può talvolta risultare in comportamenti inaspettati.
+
+    \hspace{15pt}
+    Rispetto alla tipologia di esposizione e contagio, le assunzioni iniziali relative all'influenza dell'Opinion Leader non sono state completamente riscontrate. Tale fatto potrebbe essere attribuito alla grande numerosità dei follower nel secondo livello del grafo, che arriva a contare anche decine di migliaia di unità per determinati utenti, rispetto ai valori costanti (500, 1000, 1500, 2000) considerati per i follower dell'Opinion Leader.
+    
+    Gli utenti sono risultati abbastanza influenti rispetto alla propagazione della notizia, comportamento giustificabile dalla logica di contagio intrapresa dell'utente stessa, basata su probabilità incrementale rispetto alla situazione del vicinato. Tuttavia in una visione complessiva possiamo notare che la percentuale di diffusione attribuita agli utenti è contenuta e non rappresenta un dato anomalo.
+
+    \hspace{15pt}
+    In merito alla diversa topologia e dimensione dei 4 grafi considerati, i risultati hanno mostrato che non vi sono differenze significative in merito alla diffusione. Infatti considerando e confrontando gli esiti relativi a eguali logiche di selezione dei Bot si può notare che le differenze di propagazione in percentuale sono minime.
+    
+    \hspace{15pt}
+    A causa delle forti limitazioni nell'uso di Twitter dovute ad un restringimento delle policy di sicurezza e di accesso non siamo riusciti a validare il modello secondo dati reali. Inoltre la mancanza di informazioni rispetto a un'eventuale posizionamento dei Bot in un contesto reale avrebbe reso molto complicata una valutazione precisa e sistematica dei nostri risultati.
