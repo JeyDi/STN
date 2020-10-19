@@ -1,0 +1,59 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {section}{Introduzione}{2}{section*.2}%
+\contentsline {section}{\numberline {1}Richiami alla teoria}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Grafo}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Agenti Intelligenti}{3}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Agente reattivo semplice}{4}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Agenti reattivi basati su modello}{4}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Agenti basati su obiettivi}{4}{subsubsection.1.2.3}%
+\contentsline {subsubsection}{\numberline {1.2.4}Agenti basati sull'utilità}{4}{subsubsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.3}Sistemi multi-agente}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Rete sociale ad agenti}{6}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Comunità}{7}{subsubsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.2}Densità della rete}{8}{subsubsection.1.4.2}%
+\contentsline {subsubsection}{\numberline {1.4.3}Lunghezza del cammino (Distanza)}{8}{subsubsection.1.4.3}%
+\contentsline {subsubsection}{\numberline {1.4.4}Connessione}{8}{subsubsection.1.4.4}%
+\contentsline {subsubsection}{\numberline {1.4.5}Invarianza di scala}{8}{subsubsection.1.4.5}%
+\contentsline {subsection}{\numberline {1.5}Misure di valutazione}{9}{subsection.1.5}%
+\contentsline {subsubsection}{\numberline {1.5.1}Grado e ordine di un grafo}{9}{subsubsection.1.5.1}%
+\contentsline {subsubsection}{\numberline {1.5.2}Densità di un grafo}{9}{subsubsection.1.5.2}%
+\contentsline {subsubsection}{\numberline {1.5.3}Centralità}{10}{subsubsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.6}Modelli epidemiologici compartimentali}{10}{subsection.1.6}%
+\contentsline {section}{\numberline {2}Stato dell'arte}{13}{section.2}%
+\contentsline {paragraph}{A Survey of Twitter Rumor Spreading Simulations\cite {Paper1_Survey}}{13}{section*.3}%
+\contentsline {paragraph}{Predicting Information Spreading in Twitter\cite {Paper2_Predicting}}{13}{section*.4}%
+\contentsline {paragraph}{Rumor Diffusion and Convergence during the 3.11 Earthquake: A Twitter Case Study\cite {Paper3_Earthquake}}{13}{section*.5}%
+\contentsline {paragraph}{Epidemiological Modeling of News and Rumors on Twitter\cite {Paper4_Epidemiological}}{13}{section*.6}%
+\contentsline {paragraph}{Modeling Social Influence in Social Networks with SOIL, a Python Agent-Based Social Simulator\cite {Paper5_Modeling}}{13}{section*.7}%
+\contentsline {paragraph}{Soil: An Agent-Based Social Simulator in Python for Modelling and Simulation of Social Networks\cite {Paper6_Soil}}{14}{section*.8}%
+\contentsline {section}{\numberline {3}Soil}{14}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Struttura di Soil}{14}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Soluzione proposta}{16}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Grafo}{17}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Opinion Leader}{18}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Bot}{18}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Simulazioni}{19}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Configurazione di SOIL}{20}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}File Python}{20}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}File YML}{21}{subsubsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.6}Web app}{21}{subsection.4.6}%
+\contentsline {subsubsection}{\numberline {4.6.1}Fasi dell'app}{21}{subsubsection.4.6.1}%
+\contentsline {subsubsection}{\numberline {4.6.2}Uso di streamlit}{22}{subsubsection.4.6.2}%
+\contentsline {section}{\numberline {5}Risultati ottenuti}{23}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Random}{24}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Grafo da 500 followers}{24}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Grafo da 1000 followers}{26}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Grafo da 1500 followers}{28}{subsubsection.5.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.4}Grafo da 2000 followers}{30}{subsubsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.2}Betweenness e In-Degree}{32}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Grafo da 500 followers}{32}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Grafo da 1000 followers}{34}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Grafo da 1500 followers}{36}{subsubsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.3}Eigenvector}{38}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Grafo da 500 followers}{38}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}Grafo da 1000 followers}{40}{subsubsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3}Grafo da 1500 followers}{42}{subsubsection.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.4}Grafo da 2000 followers}{44}{subsubsection.5.3.4}%
+\contentsline {section}{\numberline {6}Conclusioni}{46}{section.6}%
+\contentsline {section}{\numberline {7}Sviluppi futuri}{46}{section.7}%

@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: __latexindent_temp.aux
+The style file: plainurl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bibliography.bib
+Warning--can't use both volume and number fields in Paper2_Predicting
+You've used 30 entries,
+            2882 wiz_defined-function locations,
+            805 strings with 11155 characters,
+and the built_in function-call counts, 12136 in all, are:
+= -- 1236
+> -- 350
+< -- 10
++ -- 132
+- -- 100
+* -- 510
+:= -- 1623
+add.period$ -- 101
+call.type$ -- 30
+change.case$ -- 134
+chr.to.int$ -- 0
+cite$ -- 31
+duplicate$ -- 385
+empty$ -- 1328
+format.name$ -- 100
+if$ -- 3310
+int.to.chr$ -- 0
+int.to.str$ -- 30
+missing$ -- 20
+newline$ -- 162
+num.names$ -- 60
+pop$ -- 379
+preamble$ -- 1
+purify$ -- 110
+quote$ -- 0
+skip$ -- 940
+stack$ -- 0
+substring$ -- 404
+swap$ -- 95
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 108
+warning$ -- 1
+while$ -- 81
+width$ -- 32
+write$ -- 323
+(There was 1 warning)
